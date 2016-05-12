@@ -1,0 +1,12 @@
+useDynLib(condSURV)
+importFrom("KernSmooth", dpik)
+importFrom("graphics", "matplot", "plot")
+importFrom("stats", "binomial", "fitted", "glm", "na.omit", "quantile")
+export(KM, PKM)
+export(KMW, PKMW)
+export(Beran, NWW, LLW)
+export(survKMW, survLDM, survPLDM, survIPCW)
+export(survCS)
+export(plot.surv)
+S3method(plot, surv)
+
