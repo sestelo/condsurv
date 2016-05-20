@@ -7,14 +7,25 @@
 
 \format{
 A data frame with 929 observations on the following 15 variables.
-%Below a brief description is given for some of these variables.
-%\describe{
-%\item{time1}{Time to recurrence/censoring/death, whichever occurs first.}
-%\item{event1}{Recurrence/censoring indicator (recurrence=1, alive=0).}
-%\item{Stime}{Time to censoring/death, whichever occurs first.}
-%\item{event}{Death/censoring indicator (death=1, alive=0).}
-%\item{age}{Age in years.}
-%}
+Below a brief description is given for some of these variables.
+\describe{
+\item{time1}{Time to recurrence/censoring/death, whichever occurs first.}
+\item{event1}{Recurrence/censoring indicator (recurrence=1, alive=0).}
+\item{Stime}{Time to censoring/death, whichever occurs first.}
+\item{event}{Death/censoring indicator (death=1, alive=0).}
+\item{rx}{Treatment - Obs(ervation), Lev(amisole), Lev(amisole)+5-FU.}
+\item{sex}{Sex indicator (male=1, female=0).}
+\item{age}{Age in years.}
+\item{obstruct}{Obstruction of colon by tumour.}
+\item{perfor}{Perforation of colon.}
+\item{adhere}{Adherence to nearby organs.}
+\item{nodes}{Number of lymph nodes with detectable cancer.}
+\item{differ}{Differentiation of tumour (1=well, 2=moderate, 3=poor).}
+\item{extent}{Extent of local spread (1=submucosa, 2=muscle, 3=serosa,
+4=contiguous structures).}
+\item{surg}{Time from surgery to registration (0=short, 1=long).}
+\item{node4}{More than 4 positive lymph nodes.}
+}
 }
 
 

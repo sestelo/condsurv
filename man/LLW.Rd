@@ -25,7 +25,7 @@ LLW(x, kernel = "gaussian", bw, t1)
 \examples{
 data(colonCS)
 obj <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
-obj0 <- obj[[1]]
-LLW(x = obj0$age, bw = 3, t1 = 60) 
+obj0 <- obj$data
+LLW(x = obj0$age, bw = 3, t1 = 60)
 }
 

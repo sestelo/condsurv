@@ -23,6 +23,6 @@ NWW(covariate, x, kernel = "gaussian", bw)
 \examples{
 data(colonCS)
 obj <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
-obj0 <- obj[[1]]
+obj0 <- obj$data
 NWW(covariate = obj0$age, x=40, kernel = "gaussian", bw = 3)
 }

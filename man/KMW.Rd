@@ -9,7 +9,7 @@ KMW(time, status)
 
   \item{time}{ Survival time of the process.}
   \item{status}{Censoring indicator of the survival time of the process; 0 if the survival time is censored and 1 otherwise. }
-  
+
 }
 
 \value{ Vector with Kaplan-Meier weights. }
@@ -27,7 +27,7 @@ American Statistical Association, 53:457-481, 1958.
 \examples{
 data(colonCS)
 obj <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
-obj0 <- obj[[1]]
+obj0 <- obj$data
 KMW(time = obj0$Stime, status = obj0$event)
 }
 

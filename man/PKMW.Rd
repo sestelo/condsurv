@@ -34,7 +34,7 @@ American Statistical Association, 53:457-481, 1958.
 \examples{
 data(colonCS)
 obj <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
-obj0 <- obj[[1]]
+obj0 <- obj$data
 PKMW(time = obj0$Stime, status = obj0$event)
 }
 

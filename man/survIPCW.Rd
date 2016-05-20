@@ -7,7 +7,7 @@
 \usage{
 survIPCW(object, x, y, z.name, z.value, bw = "dpik", window = "gaussian",
 method.weights = "NW", conf = FALSE, n.boot = 200, conf.level = 0.95,
-lower.tail = FALSE)
+lower.tail = FALSE, cluster = TRUE, ncores = NULL)
 }
 
 \arguments{
@@ -22,7 +22,20 @@ lower.tail = FALSE)
   \item{conf}{Provides pointwise confidence bands. Defaults to FALSE.}
   \item{n.boot}{The number of bootstrap samples. Defaults to 1000 samples.}
   \item{conf.level}{Level of confidence. Defaults to 0.95 (corresponding to 95\%).}
-  \item{lower.tail}{logical; if FALSE (default), probabilities are P(T > y|T1 > x) otherwise, P(T <= y|T1 <= x).}
+  \item{lower.tail}{logical; if FALSE (default), probabilities are P(T > y|T1 > x) otherwise, P(T > y|T1 <= x).}
+  \item{cluster}{A logical value. If  \code{TRUE} (default), the
+bootstrap procedure for the confidence intervals is  parallelized. Note that there are cases
+(e.g., a low number of bootstrap repetitions) that R will gain in
+performance through serial computation. R takes time to distribute tasks
+across the processors also it will need time for binding them all together
+later on. Therefore, if the time for distributing and gathering pieces
+together is greater than the time need for single-thread computing, it does
+not worth parallelize.}
+
+\item{ncores}{An integer value specifying the number of cores to be used
+in the parallelized procedure. If \code{NULL} (default), the number of cores
+to be used is equal to the number of cores of the machine - 1.}
+
 }
 
 
@@ -62,7 +75,6 @@ for ordered multivariate failure time data: a comparative study. Biometrical Jou
 
 \examples{
 
-library(KernSmooth)
 data(colonCS)
 obj2 <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
 survLDM(obj2, x = 365, y = 730)
