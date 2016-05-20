@@ -99,7 +99,7 @@ survIPCW <-
 
     if (conf == TRUE) {
 
-      simpleboot <- function(object, n, n.auxi, auxi){
+      simplebootsurvIPCW <- function(object, n, n.auxi, auxi){
         k <- 1
         res.ci <- matrix(0, nrow = n.auxi, ncol = k)
         xx <- sample.int(n, size = n, replace = TRUE)
@@ -175,15 +175,15 @@ survIPCW <-
         on.exit(stopImplicitCluster())
 
         suppressMessages(
-          res.ci <- foreach(i = 1:n.boot, .combine = cbind,
-                            .export = "simpleboot") %dorng%
-            simpleboot(object, n, n.auxi, auxi)
+          res.ci <- foreach(i = 1:n.boot, .combine = cbind) %dorng%
+            simplebootsurvIPCW(object, n, n.auxi, auxi)
         )
 
       }else{
-        res.ci <- foreach(i = 1:n.boot, .combine = cbind,
-                          .export = "simpleboot") %do%
-          simpleboot(object, n, n.auxi, auxi)
+        suppressMessages(
+        res.ci <- foreach(i = 1:n.boot, .combine = cbind) %do%
+          simplebootsurvIPCW(object, n, n.auxi, auxi)
+        )
 
       }
 
@@ -233,7 +233,6 @@ survIPCW <-
       cat("Estimates of S(T>",y,"|T1>",x,",",z.name,")", sep="", "\n")
       print(resu)
     }
-
-    class(result) <- "IPCW"
+    class(result) <- c("IPCW", "surv")
     return(invisible(result))
   }

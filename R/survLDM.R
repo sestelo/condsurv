@@ -28,7 +28,7 @@ survLDM <-
 
 
     if (conf==TRUE) {
-      simpleboot <- function(object, y, x, lower.tail){
+      simplebootsurvLDM <- function(object, y, x, lower.tail){
         j <- 1
         res.ci <- matrix(0, nrow = length(y), ncol = j)
         n <- dim(object[[1]])[1]
@@ -55,16 +55,15 @@ survLDM <-
         on.exit(stopImplicitCluster())
 
         suppressMessages(
-          res.ci <- foreach(i = 1:n.boot, .combine = cbind,
-                            .export = "simpleboot") %dorng%
-            simpleboot(object, y, x, lower.tail)
+          res.ci <- foreach(i = 1:n.boot, .combine = cbind) %dorng%
+            simplebootsurvLDM(object, y, x, lower.tail)
         )
 
       }else{
-        res.ci <- foreach(i = 1:n.boot, .combine = cbind,
-                          .export = "simpleboot") %do%
-          simpleboot(object, y, x, lower.tail)
-
+        suppressMessages(
+        res.ci <- foreach(i = 1:n.boot, .combine = cbind) %do%
+          simplebootsurvLDM(object, y, x, lower.tail)
+        )
       }
 
 

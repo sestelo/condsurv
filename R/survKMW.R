@@ -44,7 +44,7 @@ survKMW <-
 
     if (conf == TRUE) {
 
-      simpleboot <- function(object, lower.tail = lower.tail, y, x){
+      simplebootsurvKMW <- function(object, lower.tail = lower.tail, y, x){
         j <- 1
         res.ci <- matrix(0, nrow = length(y), ncol = j)
         n <- dim(object[[1]])[1]
@@ -86,16 +86,15 @@ survKMW <-
         on.exit(stopImplicitCluster())
 
         suppressMessages(
-          res.ci <- foreach(i = 1:n.boot, .combine = cbind,
-                            .export = "simpleboot") %dorng%
-            simpleboot(object, lower.tail, y, x)
+          res.ci <- foreach(i = 1:n.boot, .combine = cbind) %dorng%
+            simplebootsurvKMW(object, lower.tail, y, x)
         )
 
       }else{
-        res.ci <- foreach(i = 1:n.boot, .combine = cbind,
-                          .export = "simpleboot") %do%
-          simpleboot(object, lower.tail, y, x)
-
+        suppressMessages(
+        res.ci <- foreach(i = 1:n.boot, .combine = cbind) %do%
+          simplebootsurvKMW(object, lower.tail, y, x)
+        )
       }
 
       for (k in 1: length(y)) {
