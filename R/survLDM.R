@@ -1,6 +1,6 @@
 survLDM <-
   function(object, x, y, conf = FALSE, n.boot = 1000, conf.level = 0.95,
-           lower.tail = FALSE, cluster = TRUE, ncores = NULL)
+           lower.tail = FALSE, cluster = FALSE, ncores = NULL)
   {
     if (missing(object))
       stop("Argument 'object' is missing, with no default")

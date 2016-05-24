@@ -7,7 +7,7 @@
 \usage{
 survIPCW(object, x, y, z.name, z.value, bw = "dpik", window = "gaussian",
 method.weights = "NW", conf = FALSE, n.boot = 200, conf.level = 0.95,
-lower.tail = FALSE, cluster = TRUE, ncores = NULL)
+lower.tail = FALSE, cluster = FALSE, ncores = NULL)
 }
 
 \arguments{

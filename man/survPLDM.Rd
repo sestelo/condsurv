@@ -8,7 +8,7 @@ first event time greater than x. Then presmoothing ideas are applied to reduce t
 
 \usage{
 survPLDM(object, x, y, conf = FALSE, n.boot = 1000, conf.level = 0.95,
-lower.tail = FALSE, cluster = TRUE, ncores = NULL)
+lower.tail = FALSE, cluster = FALSE, ncores = NULL)
 }
 
 \arguments{

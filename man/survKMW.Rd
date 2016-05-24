@@ -5,7 +5,7 @@
 \description{Provides estimates for the conditional survival probabilities based on Kaplan-Meier weighted estimators. }
 \usage{
 survKMW(object, x, y, conf = FALSE, n.boot = 1000, conf.level = 0.95,
-lower.tail = FALSE, cluster = TRUE, ncores = NULL)
+lower.tail = FALSE, cluster = FALSE, ncores = NULL)
 }
 
 \arguments{
