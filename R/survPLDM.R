@@ -12,14 +12,14 @@ survPLDM <-
       stop("Arguments 'x' and 'lower.tail' must have the same length")
     lenc <- dim(object[[1]])[2]
     ntimes <- lenc%/%2
-    
+
     y <- y[y >= max(x)]
     y <- sort(unique(y))
-    
-    text1 <- paste("T",c(1:length(x)),sep="")
-    text2 <- ifelse(lower.tail==TRUE, "<=",">")
-    text3 <- paste(text1,text2,x, sep="")
-    
+
+    text1 <- paste0("T", c(1:length(x)))
+    text2 <- ifelse(lower.tail == TRUE, "<=", ">")
+    text3 <- paste0(text1, text2, x, collapse = ",")
+
     X <- data.frame(object[[1]][,2*(1:ntimes)-1])
     p1 <- whichCS(X, x=x, lower.tail=lower.tail)
     G0 <- PKMW(object[[1]]$Stime[p1], object[[1]]$event[p1])
@@ -33,8 +33,8 @@ survPLDM <-
     res.ls <- rep(0,length(y))
     resu <- data.frame(cbind(y, res))
     names(resu) <- c("y", "estimate")
-    
-    
+
+
     if (conf == TRUE) {
       simplebootsurvPLDM <- function(object, y, x, lower.tail){
         j <- 1
@@ -52,7 +52,7 @@ survPLDM <-
         }
         return(res.ci)
       }
-      
+
       if (isTRUE(cluster)) {
         if (is.null(ncores)) {
           num_cores <- detectCores() - 1
@@ -61,43 +61,45 @@ survPLDM <-
         }
         registerDoParallel(cores = num_cores)
         on.exit(stopImplicitCluster())
-        
+
         suppressMessages(
           res.ci <- foreach(i = 1:n.boot, .combine = cbind) %dorng%
             simplebootsurvPLDM(object, y, x, lower.tail)
         )
-        
+
       }else{
         suppressMessages(
           res.ci <- foreach(i = 1:n.boot, .combine = cbind) %do%
             simplebootsurvPLDM(object, y, x, lower.tail)
         )
-        
+
       }
-      
+
       for (k in 1: length(y)) {
         res.li[k] <- quantile(res.ci[k,], ( 1 - conf.level) / 2)
         res.ls[k] <- quantile(res.ci[k,], 1 - (1 - conf.level) / 2)
       }
-      
-      if (length(y) == 1) cat(cat("P(T>",y,"|",sep=""), cat(text3, sep=","),") =",res,"  ", conf.level*100,"%CI: ", res.li, "-", res.ls, sep="", "\n")
-      
+
+      if (length(y) == 1) cat("P(T>",y,"|", text3, ") = ", res,"  ", conf.level*100,"%CI: ", res.li, "-", res.ls, sep = "", "\n")
+
       if (length(y)>1) {
         resu <- data.frame(cbind(resu,res.li,res.ls))
         names(resu) <- c("y","estimate","LCI","UCI")
         cat("Estimates of ", sep="")
-        cat(cat("P(T>y|",sep=""), cat(text3, sep=","),")",sep="","\n")
+        cat("P(T>y|", text3, ")", sep = "", "\n")
         print(resu)
       }
+
     }
-    
-    if(conf == FALSE) {
-      result <- list(est = resu, estimate = res, y = y, x = x, conf = conf)
-      if (length(y) == 1) cat(cat("P(T>",y,"|",sep=""), cat(text3, sep=","),") =",res, sep="", "\n")
-      
+
+    if(conf==FALSE) {
+      result <- list(est=resu, estimate=res, y=y, x=x, conf=conf)
+
+      if (length(y) == 1) cat("P(T>",y,"|",text3, ") = ", res, sep="", "\n")
+
       if (length(y)>1) {
         cat("Estimates of ", sep="")
-        cat(cat("P(T>y|",sep=""), cat(text3, sep=","),")",sep="","\n")
+        cat("P(T>y|", text3, ")", sep = "", "\n")
         print(resu)
       }
     }
