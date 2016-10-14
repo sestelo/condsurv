@@ -8,12 +8,20 @@ survLDM <-
       x <- 0
     if (missing(y))
       y <- max(object[[1]]$Stime)
-    if (length(x) > 1) stop("Length of 'x' must be 1")
-
-    y <- y[y >= x]
+    if (length(x) != length(lower.tail))
+      stop("Arguments 'x' and 'lower.tail' must have the same length")
+    lenc <- dim(object[[1]])[2]
+    ntimes <- lenc%/%2    
+    
+    y <- y[y >= max(x)]
     y <- sort(unique(y))
-    p1 <- which(object[[1]]$time1 > x)
-    if(lower.tail == TRUE) p1 <- which(object[[1]]$time1 <= x)
+    
+    text1 <- paste("T",c(1:length(x)),sep="")
+    text2 <- ifelse(lower.tail==TRUE, "<=",">")
+    text3 <- paste(text1,text2,x, sep="")
+    
+    X <- data.frame(object[[1]][,2*(1:ntimes)-1])
+    p1 <- whichCS(X, x=x, lower.tail=lower.tail)
     G0 <- KMW(object[[1]]$Stime[p1], object[[1]]$event[p1])
     t_2 <- object[[1]]$Stime[p1]
     res <- rep(0, length(y))
@@ -25,8 +33,8 @@ survLDM <-
     res.ls <- rep(0, length(y))
     resu <- data.frame(cbind(y, res))
     names(resu) <- c("y", "estimate")
-
-
+    
+    
     if (conf==TRUE) {
       simplebootsurvLDM <- function(object, y, x, lower.tail){
         j <- 1
@@ -34,8 +42,8 @@ survLDM <-
         n <- dim(object[[1]])[1]
         xx <- sample.int(n, size = n, replace = TRUE)
         ndata <- object[[1]][xx,]
-        p1 <- which(ndata$time1 > x)
-        if(lower.tail == TRUE) p1 <- which(ndata$time1 <= x)
+        X <- data.frame(ndata[,2*(1:ntimes)-1])
+        p1 <- whichCS(X, x=x, lower.tail=lower.tail)
         G0 <- KMW(ndata$Stime[p1], ndata$event[p1])
         t_2 <- ndata$Stime[p1]
         for (k in 1: length(y)) {
@@ -44,7 +52,7 @@ survLDM <-
         }
         return(res.ci)
       }
-
+      
       if (isTRUE(cluster)) {
         if (is.null(ncores)) {
           num_cores <- detectCores() - 1
@@ -53,43 +61,45 @@ survLDM <-
         }
         registerDoParallel(cores = num_cores)
         on.exit(stopImplicitCluster())
-
+        
         suppressMessages(
           res.ci <- foreach(i = 1:n.boot, .combine = cbind) %dorng%
             simplebootsurvLDM(object, y, x, lower.tail)
         )
-
+        
       }else{
         suppressMessages(
-        res.ci <- foreach(i = 1:n.boot, .combine = cbind) %do%
-          simplebootsurvLDM(object, y, x, lower.tail)
+          res.ci <- foreach(i = 1:n.boot, .combine = cbind) %do%
+            simplebootsurvLDM(object, y, x, lower.tail)
         )
       }
-
-
+      
+      
       for (k in 1: length(y)) {
         res.li[k] <- quantile(res.ci[k,], (1 - conf.level) / 2)
         res.ls[k] <- quantile(res.ci[k,], 1 - (1 - conf.level) / 2)
       }
-      if (length(y) == 1 & lower.tail == FALSE) cat("S(T>",y,"|T1>",x,") = ", res,"  ", conf.level*100,"%CI: ", res.li, "-", res.ls, sep="", "\n")
-      if (length(y) == 1 & lower.tail == TRUE) cat("S(T>",y,"|T1<=",x,") = ", res,"  ", conf.level*100,"%CI: ", res.li, "-", res.ls, sep="", "\n")
+      
+      if (length(y) == 1) cat(cat("P(T>",y,"|",sep=""), cat(text3, sep=","),") =",res,"  ", conf.level*100,"%CI: ", res.li, "-", res.ls, sep="", "\n")
+      
       if (length(y)>1) {
         resu <- data.frame(cbind(resu,res.li,res.ls))
         names(resu) <- c("y","estimate","LCI","UCI")
-        if(lower.tail == FALSE) cat("Estimates of S(T>y|T1>",x,")",sep="","\n")
-        if(lower.tail == TRUE) cat("Estimates of S(T>y|T1<=",x,")",sep="","\n")
+        cat("Estimates of ", sep="")
+        cat(cat("P(T>y|",sep=""), cat(text3, sep=","),")",sep="","\n")
         print(resu)
       }
-
+      
     }
-
+    
     if(conf==FALSE) {
       result <- list(est=resu, estimate=res, y=y, x=x, conf=conf)
-      if (length(y) == 1 & lower.tail == FALSE) cat("S(T>",y,"|T1>",x,") = ", res, sep="", "\n")
-      if (length(y) == 1 & lower.tail == TRUE) cat("S(T>",y,"|T1<=",x,") = ", res, sep="", "\n")
+      
+      if (length(y) == 1) cat(cat("P(T>",y,"|",sep=""), cat(text3, sep=","),") =",res, sep="", "\n")
+      
       if (length(y)>1) {
-        if(lower.tail == FALSE) cat("Estimates of S(T>y|T1>",x,")",sep="","\n")
-        if(lower.tail == TRUE) cat("Estimates of S(T>y|T1<=",x,")",sep="","\n")
+        cat("Estimates of ", sep="")
+        cat(cat("P(T>y|",sep=""), cat(text3, sep=","),")",sep="","\n")
         print(resu)
       }
     }
