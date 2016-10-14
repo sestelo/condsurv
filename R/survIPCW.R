@@ -332,7 +332,7 @@ survIPCW <-
     if(conf == FALSE & auxi == 1) {
       result <- list(est = resu, estimate = res, z.name = z.name, z.value = z.value, x = x, y = y, bw = bw, window = window, method.weights = method.weights, conf = conf, lbd = lbd2)
       #cat(cat("P(T>",y,"|",sep=""), cat(text3, sep=","), cat(",",z.name,"=",z.value,sep=""),") =",res, sep="", "\n")
-      cat("P(T>",y,"|",text3,",",z.name,"=",z.value,") = ", sep = "", "\n") #marta
+      cat("P(T>",y,"|",text3,",",z.name,"=",z.value,") = ", res, sep = "", "\n") #marta
       #cat("S(T>",y,"|T1>",x,",",z.name,"=",z.value,") = ", res, sep="", "\n")
     }
 
@@ -357,7 +357,7 @@ survIPCW <-
     if(conf == TRUE & auxi == 1) {
       result <- list(est = resu, estimate = res, LCI = res.li, UCI = res.ls, conf.level = conf.level, z.name = z.name, z.value = z.value, bw = bw, window = window, method.weights = method.weights, x = x, y = y, conf = conf, lbd = lbd2)
       #cat(cat("P(T>",y,"|",sep=""), cat(text3, sep=","), cat(",",z.name,"=",z.value,sep=""),") =",res, sep="")
-      cat("P(T>",y,"|",text3,",",z.name,"=",z.value,") = ", sep = "", "\n") #marta
+      cat("P(T>",y,"|",text3,",",z.name,"=",z.value,") = ", res, sep = "", "\n") #marta
       cat("  ", conf.level*100,"%CI: ", res.li, "-", res.ls, sep="", "\n")
       #cat("S(T>",y,"|T1>",x,",",z.name,"=",z.value,") = ", res,"  ", conf.level*100,"%CI: ", res.li, "-", res.ls, sep="", "\n")
     }
