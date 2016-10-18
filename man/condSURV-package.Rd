@@ -2,8 +2,8 @@
 \alias{condSURV-package}
 \alias{condSURV}
 \docType{package}
-\title{condSURV: A package for nonparametric estimation of the survival functions for ordered multivariate failure time data.
-\packageTitle{condSURV}
+\title{condSURV: \packageTitle{condSURV}
+%A package for nonparametric estimation of the survival functions for ordered multivariate failure time data.
 }
 \description{
 Newly developed methods for the estimation of
@@ -19,13 +19,14 @@ censoring probability for the survival time, given the available information is 
 
 
 \author{
-Luis Meira-Machado and Marta Sestelo
-Maintainer: Luis Meira-Machado lmachado@math.uminho.pt
+Luis Meira-Machado and Marta Sestelo.
+
+Maintainer: Luis Meira-Machado, lmachado@math.uminho.pt
 }
 
 \references{
-L. Meira-Machado, M. Sestelo, and A. Goncalves. Nonparametric estimation of the survival function
-for ordered multivariate failure time data: a comparative study. Biometrical Journal, 2016.
+L. Meira-Machado, M. Sestelo, and A. Goncalves (2016). Nonparametric estimation of the survival function
+for ordered multivariate failure time data: a comparative study. Biometrical Journal, 58(3), 623--634.
 }
 
 
