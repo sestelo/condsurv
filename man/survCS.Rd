@@ -14,13 +14,17 @@ survCS(time1, event1, Stime, event, ...)
   \item{\dots}{Other options.}
 }
 
+\details{ Arguments in this function must be introduced in the following order: time1, event1, time2, ..., Stime and event,
+            where time1, time2, ..., Stime are ordered event times and event1, event2,..., event their corresponding indicator statuses.
+	    A single covariate can also be included.}
+
 \value{An object of class "survCS" and of class "surv". "survCS" objected are implemented as a single element list. }
 
 \author{Luis Meira-Machado and Marta Sestelo}
 
 \examples{
 data(colonCS)
-obj <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
-obj1 <- with(colonCS, survCS(time1, event1, Stime, event, age = age, nodes = nodes))
+obj1 <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
+obj2 <- with(colonCS, survCS(time1, event1, Stime, event, nodes = nodes))
 }
 

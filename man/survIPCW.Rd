@@ -12,7 +12,7 @@ lower.tail = FALSE, cluster = FALSE, ncores = NULL)
 
 \arguments{
   \item{object}{An object of class "survCS".}
-  \item{x}{The first time for obtaining estimates for the conditional survival probabilities.}
+  \item{x}{Time or vector of times for the condional event(s).}
   \item{y}{The total time for obtaining estimates for the conditional survival probabilities.}
   \item{z.name}{The name of the covariate.}
   \item{z.value}{The value of the covariate ("z.name") at which the conditional survival probabilities are computed.}
@@ -22,7 +22,11 @@ lower.tail = FALSE, cluster = FALSE, ncores = NULL)
   \item{conf}{Provides pointwise confidence bands. Defaults to FALSE.}
   \item{n.boot}{The number of bootstrap samples. Defaults to 1000 samples.}
   \item{conf.level}{Level of confidence. Defaults to 0.95 (corresponding to 95\%).}
-  \item{lower.tail}{logical; if FALSE (default), probabilities are P(T > y|T1 > x) otherwise, P(T > y|T1 <= x).}
+  \item{lower.tail}{vector of logical values with the same size as 'x'. If 'x' has dimension
+     one and if lower.tail = FALSE (default), probabilities are P(T > y|T1 > x, Z = z) otherwise, P(T > y|T1 <= x, Z = z).
+     If the conditional event is 2-dimensional, then, for example, given x = c(x1, x2) and lower.tail = c(TRUE, FALSE)
+     must be used to obtain probabilities P(T > y|T1 <= x1, T2 > x2, Z = z).
+     Multi-dimensional conditional events are introduced similarly.}
   \item{cluster}{A logical value. If  \code{TRUE} (default), the
 bootstrap procedure for the confidence intervals is  parallelized. Note that there are cases
 (e.g., a low number of bootstrap repetitions) that R will gain in
@@ -71,13 +75,13 @@ for ordered multivariate failure time data: a comparative study. Biometrical Jou
 \author{Luis Meira-Machado and Marta Sestelo}
 
 
-\seealso{\code{\link{survKMW}}, \code{\link{survLDM}} and \code{\link{survPLDM}}}
+\seealso{\code{\link{survCOND}}}
 
 \examples{
 
 data(colonCS)
 obj2 <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
-survLDM(obj2, x = 365, y = 730)
+survCOND(obj2, x = 365, y = 730, method = "LDM")
 survIPCW(obj2, x = 365, y = 730, z.name = "age", z.value = 48)
 survIPCW(obj2, x = 365, y = 730, z.name = "age",
 z.value = c(30, 35, 40, 45, 50, 55, 60))

@@ -7,7 +7,7 @@
 }
 \description{
 Newly developed methods for the estimation of
-the conditional survival function are implemented in this package. The condSURV package implements three nonparametric and
+the conditional survival function are implemented in this package. The condSURV package implements nonparametric and
 semiparametric estimators for these quantities. The package also implements feasible
 estimation methods for these quantities conditionally on current or past covariate measures. Other
 related estimators are also implemented in the package. One of these estimators is the Kaplan-Meier

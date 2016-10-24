@@ -6,7 +6,7 @@ survIPCW <-
   {
     if (missing(object))
       stop("Argument 'object' is missing, with no default")
-    if (class(object)[1]!="survCS") stop("The argumment 'object' must be of classe 'survCS'")
+    if (class(object)[1] != "survCS") stop("The argumment 'object' must be of classe 'survCS'")
     obj <- object[[1]]
     if (missing(x))
       x <- 0
@@ -18,7 +18,19 @@ survIPCW <-
     covar <- which(names(object[[1]]) == z.name)
     if (missing(z.value)) z.value <- mean(object[[1]][, covar])
     res <- rep(0, length(z.value))
-    ifelse (is.numeric(bw), lbd2 <- bw, lbd2 <- dpik(x = object[[1]][, covar]))
+
+    if (bw == "dpik"){
+      lbd2 <- dpik(x = object[[1]][, covar])
+    } else if (bw == "npudensbw"){
+      options(np.messages = FALSE)
+      lbd2 <- npudensbw(dat = object[[1]][, covar])$bw
+    } else {
+      lbd2 <- bw
+    }
+    if (!is.numeric(bw) & !(bw %in% c("dpik", "npudensbw"))) {
+      stop("Argument 'bw' have to be 'dpik', 'npudensbw' or a numeric.")
+    }
+
     n <- dim(object[[1]])[1]
     delta4 <- rep(1, n)
     lenc <- dim(object[[1]])[2]

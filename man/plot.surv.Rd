@@ -24,7 +24,7 @@ data(colonCS)
 obj <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
 y1 <- obj$data$Stime
 y1 <- y1[y1 > 365]
-res1 <- survLDM(obj, x = 365, y = y1, conf = TRUE, n.boot = 100,
+res1 <- survCOND(obj, x = 365, y = y1, method = "LDM", conf = TRUE, n.boot = 100,
 conf.level = 0.95, cluster = FALSE)
 plot(res1, type = "l", col = c(1, 2, 2), lty = c(1, 2, 2),
 xlab = "Time (days)", ylab = "S(y|365)", ylim = c(0.5, 1))

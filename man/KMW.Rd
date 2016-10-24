@@ -28,6 +28,18 @@ American Statistical Association, 53:457-481, 1958.
 data(colonCS)
 obj <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
 obj0 <- obj$data
-KMW(time = obj0$Stime, status = obj0$event)
+kmw <- KMW(time = obj0$Stime, status = obj0$event)
+
+library("survival")
+colon.surv <- survfit(Surv(Stime, event) ~ 1, colon)
+times <- summary(colon.surv)$time
+surv <- summary(colon.surv)$surv
+nevent <- summary(colon.surv)$n.event
+p <- match(colon$Stime, times)
+kmw2 <- -diff(c(1, surv))/nevent
+kmw2 <- kmw2[p]*colon$event
+kmw2[is.na(kmw2)] <- 0
+all.equal(kmw, kmw2)
+
 }
 
