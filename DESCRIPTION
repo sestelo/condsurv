@@ -15,6 +15,7 @@ LazyData: TRUE
 Imports:
     KernSmooth,
     np,
+    survival,
     doParallel,
     parallel,
     doRNG,

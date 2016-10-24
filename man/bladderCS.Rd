@@ -6,7 +6,7 @@
   bladderCS is a data frame with 8 variables and 85 observations.
   Data on recurrences of bladder cancer, used by many people to demonstrate methodology for recurrent event modelling.}
 
-\usage{data("bladder4CS")}
+\usage{data("bladderCS")}
 
 \format{
   A data frame with 85 observations on the following 8 variables.
@@ -30,7 +30,7 @@
 
   Byar, D. (1980) Veterans administration study of chemoprophylaxis for recurrent stage i bladder tumors:
   Comparisons of placebo, pyridoxine and topical thiotepa. Bladder Tumors and Other Topics in
-  Urological Oncology, 18:363370.
+  Urological Oncology, 18:363--370.
 }
 
 \examples{

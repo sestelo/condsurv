@@ -27,12 +27,13 @@ American Statistical Association, 53:457-481, 1958.
 \seealso{\code{\link{PKM}}}
 
 \examples{
+require(survival)
 data(colonCS)
 obj <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
 obj0 <- obj$data
 KM(time = obj0$Stime, status = obj0$event, t = 1095)
 
-fit <- survfit(Surv(obj$Stime, obj$event) ~ 1, data = obj0)
+fit <- survfit(Surv(obj0$Stime, obj0$event) ~ 1, data = obj0)
 summary(fit, time = 1095)$surv
 
 }
