@@ -31,13 +31,13 @@ obj0 <- obj$data
 kmw <- KMW(time = obj0$Stime, status = obj0$event)
 
 require(survival)
-colon.surv <- survfit(Surv(Stime, event) ~ 1, colonCS)
+colon.surv <- survfit(Surv(Stime, event) ~ 1, obj0)
 times <- summary(colon.surv)$time
 surv <- summary(colon.surv)$surv
 nevent <- summary(colon.surv)$n.event
-p <- match(colonCS$Stime, times)
+p <- match(obj0$Stime, times)
 kmw2 <- -diff(c(1, surv))/nevent
-kmw2 <- kmw2[p]*colon$event
+kmw2 <- kmw2[p]*obj0$event
 kmw2[is.na(kmw2)] <- 0
 all.equal(kmw, kmw2)
 
