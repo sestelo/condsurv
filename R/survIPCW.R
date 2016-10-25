@@ -1,7 +1,7 @@
 survIPCW <-
   function(object, x, y, z.name, z.value, bw = "dpik", window = "gaussian",
            method.weights = "NW", conf = FALSE, n.boot = 200,
-           conf.level = 0.95, lower.tail = FALSE, cluster = FALSE,
+           conf.level = 0.95, lower.tail = rep(FALSE, length(x)), cluster = FALSE,
            ncores = NULL)
   {
     if (missing(object))
@@ -21,14 +21,14 @@ survIPCW <-
 
     if (bw == "dpik"){
       lbd2 <- dpik(x = object[[1]][, covar])
-    } else if (bw == "npudensbw"){
+    } else if (bw == "np"){
       options(np.messages = FALSE)
       lbd2 <- npudensbw(dat = object[[1]][, covar])$bw
     } else {
       lbd2 <- bw
     }
-    if (!is.numeric(bw) & !(bw %in% c("dpik", "npudensbw"))) {
-      stop("Argument 'bw' have to be 'dpik', 'npudensbw' or a numeric.")
+    if (!is.numeric(bw) & !(bw %in% c("dpik", "np"))) {
+      stop("Argument 'bw' have to be 'dpik', 'np' or a numeric.")
     }
 
     n <- dim(object[[1]])[1]
