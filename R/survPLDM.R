@@ -22,6 +22,7 @@ survPLDM <-
 
     X <- data.frame(object[[1]][,2*(1:ntimes)-1])
     p1 <- whichCS(X, x=x, lower.tail=lower.tail)
+    if (length(p1) == 0) stop("Insufficient data.")
     G0 <- PKMW(object[[1]]$Stime[p1], object[[1]]$event[p1])
     t_2 <- object[[1]]$Stime[p1]
     res <- rep(0, length(y))
@@ -44,6 +45,7 @@ survPLDM <-
         ndata <- object[[1]][xx,]
         X <- data.frame(ndata[,2*(1:ntimes)-1])
         p1 <- whichCS(X, x=x, lower.tail=lower.tail)
+        if (length(p1) == 0) stop("Insufficient data.")
         G0 <- PKMW(ndata$Stime[p1], ndata$event[p1])
         t_2 <- ndata$Stime[p1]
         for (k in 1: length(y)) {

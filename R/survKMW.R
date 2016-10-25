@@ -30,8 +30,10 @@ survKMW <-
         G2 <- KMW(object[[1]]$time1, object[[1]]$event1)
         G1 <- KMW(object[[1]]$Stime, object[[1]]$event)
         p2 <- which(object[[1]]$time1 <= x)
+        if (length(p2) == 0) stop("Insufficient data.")
         for (k in 1: length(y)) {
           p1 <- which(object[[1]]$time1 > x & object[[1]]$Stime <= y[k])
+          if (length(p1) == 0) stop("Insufficient data.")
           res[k] <- 1 - sum(G1[p1])/(1 - sum(G2[p2]))
           if (res[k] < 0) res[k] <- 0
         }
@@ -42,12 +44,17 @@ survKMW <-
         G2 <- KMW(object[[1]]$time1, object[[1]]$event1)
         G1 <- KMW(object[[1]]$Stime, object[[1]]$event)
         p2 <- which(object[[1]]$time1 <= x)
+        if (length(p2) == 0) stop("Insufficient data.")
         for (k in 1: length(y)) {
           p1 <- which(object[[1]]$time1 <= x & object[[1]]$Stime <= y[k])
+          if (length(p1) == 0) stop("Insufficient data.")
           den <- sum(G2[p2])
-          res[k] <- 1 - sum(G1[p1])/ den
-          if (res[k] < 0) res[k] <- 0
-          if (den == 0) res[k] <- NA
+          if (den == 0){
+            res[k] <- NA
+          }else{
+            res[k] <- 1 - sum(G1[p1])/ den
+            if (res[k] < 0) res[k] <- 0
+            }
         }
       }
     }
@@ -59,17 +66,21 @@ survKMW <-
       #p2 <- which(object[[1]]$time1 <= x)
       X <- data.frame(object[[1]][,2*(1:ntimes)-1])
       p2 <- whichCS(X, x=x, lower.tail=lower.tail)
-
+      if (length(p2) == 0) stop("Insufficient data.")
       for (k in 1: length(y)) {
         #p1 <- which(object[[1]]$time1 <= x & object[[1]]$Stime <= y[k])
         X <- data.frame(object[[1]][,2*(1:ntimes)-1])
         xy <- c(x,y[k])
         lower.tail.y <- c(lower.tail,TRUE)
         p1 <- whichCS(X, x=xy, lower.tail=lower.tail.y)
+        if (length(p1) == 0) stop("Insufficient data.")
         den <- sum(G2[p2])
-        res[k] <- 1 - sum(G1[p1])/ den
-        if (res[k] < 0) res[k] <- 0
-        if (den == 0) res[k] <- NA
+         if (den == 0){
+          res[k] <- NA
+        }else{
+          res[k] <- 1 - sum(G1[p1])/ den
+          if (res[k] < 0) res[k] <- 0
+          }
       }
 
     }
@@ -92,8 +103,10 @@ survKMW <-
             G2 <- KMW(ndata$time1, ndata$event1)
             G1 <- KMW(ndata$Stime, ndata$event)
             p2 <- which(ndata$time1 <= x)
+            if (length(p2) == 0) stop("Insufficient data.")
             for (k in 1: length(y)) {
               p1 <- which(ndata$time1 > x & ndata$Stime <= y[k])
+              if (length(p1) == 0) stop("Insufficient data.")
               res.ci[k, j] <- 1 - sum(G1[p1]) / (1 - sum(G2[p2]))
               if (res.ci[k, j] < 0) res.ci[k, j] <- 0
             }
@@ -104,12 +117,17 @@ survKMW <-
             G2 <- KMW(ndata$time1, ndata$event1)
             G1 <- KMW(ndata$Stime, ndata$event)
             p2 <- which(ndata$time1 <= x)
+            if (length(p2) == 0) stop("Insufficient data.")
             for (k in 1: length(y)) {
               p1 <- which(ndata$time1 <= x & ndata$Stime <= y[k])
+              if (length(p1) == 0) stop("Insufficient data.")
               den <- sum(G2[p2])
-              res.ci[k, j] <- 1 - sum(G1[p1]) / den
-              if (res.ci[k, j] < 0) res.ci[k,j] <- 0
-              if (den == 0) res.ci[k, j] <- NA
+              if (den == 0){
+                res.ci[k, j] <- NA
+              }else{
+                res.ci[k, j] <- 1 - sum(G1[p1]) / den
+                if (res.ci[k, j] < 0) res.ci[k,j] <- 0
+                }
             }
           }
         }
@@ -120,6 +138,7 @@ survKMW <-
           #p2 <- which(ndata$time1 <= x)
           X <- data.frame(ndata[,2*(1:ntimes)-1])
           p2 <- whichCS(X, x=x, lower.tail=lower.tail)
+          if (length(p2) == 0) stop("Insufficient data.")
 
           for (k in 1: length(y)) {
             #p1 <- which(ndata$time1 <= x & ndata$Stime <= y[k])
@@ -127,10 +146,14 @@ survKMW <-
             xy <- c(x,y[k])
             lower.tail.y <- c(lower.tail,TRUE)
             p1 <- whichCS(X, x=xy, lower.tail=lower.tail.y)
+            if (length(p1) == 0) stop("Insufficient data.")
             den <- sum(G2[p2])
+            if (den == 0){
+              res.ci[k, j] <- NA
+            }else{
             res.ci[k, j] <- 1 - sum(G1[p1]) / den
             if (res.ci[k, j] < 0) res.ci[k,j] <- 0
-            if (den == 0) res.ci[k, j] <- NA
+            }
           }
         }
 
