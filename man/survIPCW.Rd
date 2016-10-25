@@ -17,7 +17,8 @@ lower.tail = FALSE, cluster = FALSE, ncores = NULL)
   \item{z.name}{The name of the covariate.}
   \item{z.value}{The value of the covariate ("z.name") at which the conditional survival probabilities are computed.}
   \item{bw}{A single numeric value to compute a kernel density bandwidth.
-  Use "dpik" for the KernSmooth package based selector or "npudensbw" for the np package based selector. }
+  Use "dpik" for the KernSmooth package based selector or "np" for the
+  'npudensbw' function of the np package. }
   \item{window}{A character string specifying the desired kernel. See details below for possible options. Defaults to "gaussian" where the gaussian density kernel will be used.}
   \item{method.weights}{A character string specifying the desired weights method. Possible options are "NW" for the Nadaraya-Watson weights and "LL" for local linear weights. Defaults to "NW".}
   \item{conf}{Provides pointwise confidence bands. Defaults to FALSE.}
