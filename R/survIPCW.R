@@ -1,7 +1,7 @@
 survIPCW <-
   function(object, x, y, z.name, z.value, bw = "dpik", window = "gaussian",
            method.weights = "NW", conf = FALSE, n.boot = 200,
-           conf.level = 0.95, lower.tail = rep(FALSE, length(x)), cluster = FALSE,
+           conf.level = 0.95, lower.tail = FALSE, cluster = FALSE,
            ncores = NULL)
   {
     if (missing(object))

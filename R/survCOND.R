@@ -1,5 +1,5 @@
 survCOND <-
-  function(object, x, y, lower.tail = rep(FALSE, length(x)), method = "LDM",
+  function(object, x, y, lower.tail = FALSE, method = "LDM",
            presmooth = FALSE, conf = FALSE, n.boot = 1000,
            conf.level = 0.95, cluster = FALSE, ncores = NULL, na.rm = TRUE)
   {
