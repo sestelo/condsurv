@@ -12,6 +12,14 @@ survLDM <-
       stop("Arguments 'x' and 'lower.tail' must have the same length")
     lenc <- dim(object[[1]])[2]
     ntimes <- lenc%/%2
+    if (any(x < 0))
+      stop("'x' values should be nonnegative")
+    if (any(y < 0))
+      stop("'y' values should be nonnegative")
+    if (any(y < max(x)))
+      stop("'y' values should be equal or greater than all values in 'x'")
+    if (length(x) > ntimes-1)
+      stop("The length of 'x' is not supported for the selected 'object'")
 
     y <- y[y >= max(x)]
     y <- sort(unique(y))
@@ -29,6 +37,7 @@ survLDM <-
     for (k in 1: length(y)) {
       p2 <- which(t_2 <= y[k])
       res[k] <- 1 - sum(G0[p2])
+      if (res[k] < 0) res[k] <- 0
     }
     res.li <- rep(0, length(y))
     res.ls <- rep(0, length(y))
@@ -51,6 +60,7 @@ survLDM <-
         for (k in 1: length(y)) {
           p2 <- which(t_2 <= y[k])
           res.ci[k,j] <- 1 - sum(G0[p2])
+          if (res.ci[k,j] < 0) res.ci[k,j] <- 0
         }
         return(res.ci)
       }
@@ -80,6 +90,8 @@ survLDM <-
       for (k in 1: length(y)) {
         res.li[k] <- quantile(res.ci[k,], (1 - conf.level) / 2)
         res.ls[k] <- quantile(res.ci[k,], 1 - (1 - conf.level) / 2)
+        if (res.li[k] < 0) res.li[k] <- 0
+        if (res.ls[k] < 0) res.ls[k] <- 0
       }
 
       if (length(y) == 1) cat("P(T>",y,"|", text3, ") = ", res,"  ", conf.level*100,"%CI: ", res.li, "-", res.ls, sep = "", "\n")
