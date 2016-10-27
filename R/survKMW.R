@@ -12,6 +12,14 @@ survKMW <-
       stop("Arguments 'x' and 'lower.tail' must have the same length")
     lenc <- dim(object[[1]])[2]
     ntimes <- lenc%/%2
+    if (any(x < 0))
+      stop("'x' values should be nonnegative")
+    if (any(y < 0))
+      stop("'y' values should be nonnegative")
+    if (any(y < max(x)))
+      stop("'y' values should be equal or greater than all values in 'x'")
+    if (length(x) > ntimes-1)
+      stop("The length of 'x' is not supported for the selected 'object'")
 
     y <- y[y >= max(x)]
     y <- sort(unique(y))
@@ -27,15 +35,26 @@ survKMW <-
     if (ntimes == 2) {
       if (lower.tail == FALSE)
       {
-        G2 <- KMW(object[[1]]$time1, object[[1]]$event1)
-        G1 <- KMW(object[[1]]$Stime, object[[1]]$event)
-        p2 <- which(object[[1]]$time1 <= x)
-        if (length(p2) == 0) stop("Insufficient data.")
-        for (k in 1: length(y)) {
-          p1 <- which(object[[1]]$time1 > x & object[[1]]$Stime <= y[k])
-          if (length(p1) == 0) stop("Insufficient data.")
-          res[k] <- 1 - sum(G1[p1])/(1 - sum(G2[p2]))
-          if (res[k] < 0) res[k] <- 0
+        if(x == 0) {
+          for (k in 1: length(y)) { res[k] <- KM(object[[1]]$Stime, object[[1]]$event, y[k])}
+        }
+        else{
+          G2 <- KMW(object[[1]]$time1, object[[1]]$event1)
+          G1 <- KMW(object[[1]]$Stime, object[[1]]$event)
+          p2 <- which(object[[1]]$time1 <= x)
+          if (length(p2) == 0){
+            p2 <- which(object[[1]]$time1 > x)
+            den <- sum(G2[p2])
+          }
+          else { den <- 1 - sum(G2[p2])}
+
+          if (den == 0) stop("Insufficient data.")
+          for (k in 1: length(y)) {
+            p1 <- which(object[[1]]$time1 > x & object[[1]]$Stime <= y[k])
+            if (length(p1) == 0) stop("Insufficient data.")
+            res[k] <- 1 - sum(G1[p1])/den
+            if (res[k] < 0) res[k] <- 0
+          }
         }
       }
 
@@ -54,7 +73,7 @@ survKMW <-
           }else{
             res[k] <- 1 - sum(G1[p1])/ den
             if (res[k] < 0) res[k] <- 0
-            }
+          }
         }
       }
     }
@@ -75,12 +94,12 @@ survKMW <-
         p1 <- whichCS(X, x=xy, lower.tail=lower.tail.y)
         if (length(p1) == 0) stop("Insufficient data.")
         den <- sum(G2[p2])
-         if (den == 0){
+        if (den == 0){
           res[k] <- NA
         }else{
           res[k] <- 1 - sum(G1[p1])/ den
           if (res[k] < 0) res[k] <- 0
-          }
+        }
       }
 
     }
@@ -100,15 +119,30 @@ survKMW <-
         if (ntimes == 2) {
           if (lower.tail == FALSE)
           {
-            G2 <- KMW(ndata$time1, ndata$event1)
-            G1 <- KMW(ndata$Stime, ndata$event)
-            p2 <- which(ndata$time1 <= x)
-            if (length(p2) == 0) stop("Insufficient data.")
-            for (k in 1: length(y)) {
-              p1 <- which(ndata$time1 > x & ndata$Stime <= y[k])
-              if (length(p1) == 0) stop("Insufficient data.")
-              res.ci[k, j] <- 1 - sum(G1[p1]) / (1 - sum(G2[p2]))
-              if (res.ci[k, j] < 0) res.ci[k, j] <- 0
+            if(x == 0) {
+              for (k in 1: length(y)) { res.ci[k,j] <- KM(ndata$Stime, ndata$event, y[k])}
+            }
+            else{
+              G2 <- KMW(ndata$time1, ndata$event1)
+              G1 <- KMW(ndata$Stime, ndata$event)
+              p2 <- which(ndata$time1 <= x)
+
+              if (length(p2) == 0){
+                p2 <- which(ndata$time1 > x)
+                den <- sum(G2[p2])
+              }
+              else { den <- 1 - sum(G2[p2])}
+
+              if (den == 0) stop("Insufficient data.")
+
+
+              if (length(p2) == 0) stop("Insufficient data.")
+              for (k in 1: length(y)) {
+                p1 <- which(ndata$time1 > x & ndata$Stime <= y[k])
+                if (length(p1) == 0) stop("Insufficient data.")
+                res.ci[k, j] <- 1 - sum(G1[p1]) / den
+                if (res.ci[k, j] < 0) res.ci[k, j] <- 0
+              }
             }
           }
 
@@ -127,7 +161,7 @@ survKMW <-
               }else{
                 res.ci[k, j] <- 1 - sum(G1[p1]) / den
                 if (res.ci[k, j] < 0) res.ci[k,j] <- 0
-                }
+              }
             }
           }
         }
@@ -151,8 +185,8 @@ survKMW <-
             if (den == 0){
               res.ci[k, j] <- NA
             }else{
-            res.ci[k, j] <- 1 - sum(G1[p1]) / den
-            if (res.ci[k, j] < 0) res.ci[k,j] <- 0
+              res.ci[k, j] <- 1 - sum(G1[p1]) / den
+              if (res.ci[k, j] < 0) res.ci[k,j] <- 0
             }
           }
         }
