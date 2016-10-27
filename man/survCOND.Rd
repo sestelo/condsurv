@@ -37,7 +37,7 @@
    \item{ncores}{An integer value specifying the number of cores to be used
      in the parallelized procedure. If \code{NULL} (default), the number of cores
      to be used is equal to the number of cores of the machine - 1.}
-   \item{na.rm}{A logical value indicating whether NA values should be stripped before the computation proceeds.}
+   \item{na.rm}{A logical value indicating whether NA values should be stripped in the computation.}
 
  }
 
