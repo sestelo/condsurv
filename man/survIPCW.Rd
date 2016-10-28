@@ -86,8 +86,8 @@ obj2 <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
 survCOND(obj2, x = 365, y = 730, method = "LDM")
 survIPCW(obj2, x = 365, y = 730, z.name = "age", z.value = 48)
 survIPCW(obj2, x = 365, y = 730, z.name = "age",
-z.value = c(30, 35, 40, 45, 50, 55, 60))
-survIPCW(obj2, x = 365, y = c(730, 1095, 1460),
+z.value = c(30, 35, 40, 45))
+survIPCW(obj2, x = 365, y = c(730, 1095),
 z.name = "age", z.value = c(48))
 }
 

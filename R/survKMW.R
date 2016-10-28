@@ -18,8 +18,10 @@ survKMW <-
       stop("'y' values should be nonnegative")
     if (any(y < max(x)))
       stop("'y' values should be equal or greater than all values in 'x'")
-    if (length(x) > ntimes-1)
+    if (length(x) != ntimes-1) {
+      cat("The number of consecutive event times in", substitute(object), "is", ntimes, ". The length of 'x' should be", ntimes-1,"\n")
       stop("The length of 'x' is not supported for the selected 'object'")
+    }
 
     y <- y[y >= max(x)]
     y <- sort(unique(y))
