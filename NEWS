@@ -2,8 +2,8 @@ This file documents software changes since the previous edition.
 
 # condSURV 1.0.0 (2016-10-28)
 
-  * modifications were introduced in the package ‘condSURV’ to account for multiple prior events. The current version of the package allows the user to obtain the conditional survival function where the conditional event is multi-dimensional.
+  * modifications were introduced in the package 'condSURV' to account for multiple prior events. The current version of the package allows the user to obtain the conditional survival function where the conditional event is multi-dimensional.
 
-  * the survKMW, survLDM and survPLDM functions were merged in a single function survCOND (with a “method” argument).
+  * the survKMW, survLDM and survPLDM functions were merged in a single function survCOND (with a 'method' argument).
 
 
