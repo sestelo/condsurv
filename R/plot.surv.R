@@ -46,5 +46,5 @@ plot.surv <-
     #   #oask <- devAskNewPage(TRUE)
     #   #on.exit(devAskNewPage(oask))
     # }
-#hola
+
   }
