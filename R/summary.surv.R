@@ -1,5 +1,5 @@
-summary.surv <- function(x, times = NULL, ...){
-  object <- x
+summary.surv <- function(object, times = NULL, ...){
+
   if (is.null(times)) {
     cat("\n")
     cat(object$callp, "\n")

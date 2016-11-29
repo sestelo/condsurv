@@ -1,17 +1,23 @@
 \name{survCOND}
 \alias{survCOND}
 
-\title{Conditional survival probabilities based on the Kaplan-Meier weights and Landmark approaches.}
+\title{Conditional survival probabilities based on the Kaplan-Meier weights,
+Landmark approaches and Inverse probability of censoring weighted.}
 \description{Provides estimates for the conditional survival probabilities
-  based on Kaplan-Meier weighted estimators and the Landmark approaches.}
+  based on Kaplan-Meier weighted estimators, the Landmark approaches and
+  Inverse probability of censoring weighted.}
  \usage{
-   survCOND(object, x, y, lower.tail = FALSE, method = "LDM", presmooth = FALSE,
-   conf = FALSE, n.boot = 1000, conf.level = 0.95, cluster = FALSE,
-   ncores = NULL, na.rm = TRUE)
+   survCOND(formula, x, y, lower.tail = FALSE, method = "LDM",
+   presmooth = FALSE, conf = FALSE, n.boot = 100, data,
+   conf.level = 0.95, z.value, bw = "dpik", window = "gaussian",
+   method.weights = "NW", cluster = FALSE, ncores = NULL, na.rm = TRUE)
  }
 %
  \arguments{
-   \item{object}{An object of class "survCS".}
+   \item{formula}{A formula object, which must have a \code{survCS} object
+   as the response on the left of the \code{~} operator and, if desired,
+    a term on the right. The term may be a cualitative or cuantitative variable.
+    For a single survival curve the right hand side should be ~ 1.}
    \item{x}{Time or vector of times for the condional event(s).}
    \item{y}{The total time for obtaining estimates for the conditional survival probabilities.}
    \item{lower.tail}{vector of logical values with the same size as 'x'. If 'x' has dimension
@@ -19,70 +25,99 @@
      If the conditional event is 2-dimensional, then, for example, given x = c(x1, x2) and lower.tail = c(TRUE, FALSE)
      must be used to obtain probabilities P(T > y|T1 <= x1, T2 > x2). Multi-dimensional conditional events are introduced similarly.}
    \item{method}{The method used to compute the conditional survival function.
-     Possible options are "LDM" and "KMW". Defaults to "LDM".}
+     Possible options are "LDM", "KMW" and "IPCW". Defaults to "LDM".}
    \item{presmooth}{A logical value. If  \code{TRUE}, the presmoothed landmark estimator of the
      conditional survival function is computed.}
    \item{conf}{Provides pointwise confidence bands. Defaults to FALSE.}
    \item{n.boot}{The number of bootstrap samples. Defaults to 1000 samples.}
+    \item{data}{A data frame in which to interpret the variables named
+    in the \code{formula} and \code{subset} arguments.}
    \item{conf.level}{Level of confidence. Defaults to 0.95 (corresponding to 95\%).}
+   \item{z.value}{The value of the covariate ("z.name") at which the conditional survival probabilities are computed.}
+   \item{bw}{A single numeric value to compute a kernel density bandwidth.
+  Use "dpik" for the KernSmooth package based selector or "np" for the
+  'npudensbw' function of the np package. }
+  \item{window}{A character string specifying the desired kernel.
+  See details below for possible options. Defaults to "gaussian" where the
+  gaussian density kernel will be used.}
+  \item{method.weights}{A character string specifying the desired weights
+  method. Possible options are "NW" for the Nadaraya-Watson weights and
+  "LL" for local linear weights. Defaults to "NW".}
    \item{cluster}{A logical value. If  \code{TRUE} (default), the
-     bootstrap procedure  for the confidence intervals is  parallelized. Note that there are cases
+     bootstrap procedure  for the confidence intervals is  parallelized.
+     Note that there are cases
      (e.g., a low number of bootstrap repetitions) that R will gain in
      performance through serial computation. R takes time to distribute tasks
      across the processors also it will need time for binding them all together
      later on. Therefore, if the time for distributing and gathering pieces
      together is greater than the time need for single-thread computing, it does
      not worth parallelize.}
-%
    \item{ncores}{An integer value specifying the number of cores to be used
      in the parallelized procedure. If \code{NULL} (default), the number of cores
      to be used is equal to the number of cores of the machine - 1.}
-   \item{na.rm}{A logical value indicating whether NA values should be stripped in the computation.}
+   \item{na.rm}{A logical value indicating whether NA values should
+   be stripped in the computation.}
 
  }
 
- \value{An object of class "surv" and one of the following three classes: "KMW", "LMD" and "PLDM". Objects are implemented as a list with elements:
+ \value{An object of class "surv" and one of the following four classes:
+ "KMW", "LMD", "PLDM" and "IPCW". Objects are implemented as a list with elements:
      \item{est}{data.frame with estimates of the conditional probabilities.}
    \item{estimate}{Estimates of the conditional survival probability.}
    \item{LCI}{The lower conditional survival probabilities of the interval.}
    \item{UCI}{The upper conditional survival probabilities of the interval.}
-   \item{conf.level}{Level of confidence.}
-   \item{y}{The total time for obtaining the estimates of the conditional survival probabilities.}
+    \item{conf.level}{Level of confidence.}
+     \item{y}{The total time for obtaining the estimates of the conditional survival probabilities.}
    \item{x}{The first time for obtaining the estimates of the conditional survival probabilities.}
+   \item{Nlevels}{The number of levels of the covariate.}
    \item{conf}{logical; if FALSE (default) the pointwise confidence bands are not given.}
+   \item{callp}{The expression of the estimated probability.}
+   \item{levels}{The levels of the covariate.}
+
+
  }
 
- \references{
-   L. Meira-Machado, M. Sestelo, and A. Goncalves. Nonparametric estimation of the survival function
-   for ordered multivariate failure time data: a comparative study. Biometrical Journal, 2016.
- }
+ \details{Possible options for argument window are "gaussian",
+ "epanechnikov", "tricube", "boxcar", "triangular", "quartic" or "cosine".}
+
+\references{
+L. Meira-Machado, M. Sestelo, and A. Goncalves (2016). Nonparametric estimation of the survival function
+for ordered multivariate failure time data: a comparative study. Biometrical Journal, 58(3), 623--634.
+}
 
  \author{Luis Meira-Machado and Marta Sestelo}
 %
 %
- \seealso{\code{\link{survIPCW}}}
+
 %
  \examples{
-   data(colonCS)
-   obj <- with(colonCS, survCS(time1, event1, Stime, event))
 
-   % P(T>y|T1>x)
-   survCOND(obj, x = 365, y = 730, method = "KMW")
+   fit <- survCOND(survCS(time1, event1, Stime, event) ~ 1, x = 365, y = 730,
+   data = colonCS, method = "KMW")
 
-   survCOND(obj, x = 365, y = c(730, 1095, 1460), method = "KMW")
+   fit1 <- survCOND(survCS(time1, event1, Stime, event) ~ 1, x = 365,
+   data = colonCS, method = "LDM")
 
-   %P(T>y|T1<=x)
-   survCOND(obj, x = 365, y = 730, method = "KMW", lower.tail = TRUE)
+   fit2 <- survCOND(survCS(time1, event1, Stime, event) ~ 1, x = 365,
+   data = colonCS, method = "LDM", lower.tail = TRUE)
 
-   survCOND(obj, x = 365, y = 730, method = "LDM", lower.tail = TRUE)
-
-   survCOND(obj, x = 365, y = 730, method = "LDM", presmooth = TRUE,
+   fit3 <- survCOND(survCS(time1, event1, Stime, event) ~ 1, x = 365,
+   y = c(730, 1095, 1460), data = colonCS, method = "LDM", presmooth = TRUE,
    lower.tail = TRUE, conf = TRUE, n.boot = 100, conf.level = 0.95,
    cluster = FALSE)
 
-   res <- survCOND(obj, x = 365, y = c(730, 1095, 1460), method = "LDM",
-   lower.tail = TRUE, conf = TRUE, n.boot = 100, conf.level = 0.95,
-   cluster = FALSE)
+   fit4 <- survCOND(survCS(time1, event1, Stime, event) ~ rx, x = 365,
+   data = colonCS, method = "LDM")
 
-   res$est
+   fit5 <- survCOND(survCS(time1, event1, Stime, event) ~ factor(sex),
+   x = 365, data = colonCS, method = "LDM")
+
+  \dontrun{
+   fit6 <- survCOND(survCS(time1, event1, Stime, event) ~ age,
+   x = 365, y = 730, z.value = 48, data = colonCS, conf = TRUE)
+   }
+
+
+
+
  }

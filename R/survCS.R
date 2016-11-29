@@ -52,7 +52,7 @@ survCS <-
 
     attr(data, "row.names") <- as.integer(1:length(time1))
     attr(data, "class") <- "data.frame"
-    object <- list(data = na.omit(data))
+    object <- list(data = na.omit(data), call = match.call())
     attr(object, "class") <- c("survCS", "surv")
     return(object)
   }

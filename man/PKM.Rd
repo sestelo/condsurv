@@ -7,7 +7,7 @@ PKM(time, status, t)
 }
 
 \arguments{
-  \item{time}{ Survival time of the process.}
+  \item{time}{Survival time of the process.}
   \item{status}{Censoring indicator of the survival time of the process; 0 if the survival time is censored and 1 otherwise. }
   \item{t}{ The time for obtaining survival estimates.}
 }
@@ -29,8 +29,7 @@ American Statistical Association, 53:457-481, 1958.
 \seealso{\code{\link{KM}}}
 
 \examples{
-data(colonCS)
-obj <- with(colonCS, survCS(time1, event1, Stime, event, age = age))
+obj <- with(colonCS, survCS(time1, event1, Stime, event))
 obj0 <- obj$data
 PKM(time = obj0$Stime, status = obj0$event, t = 1095)
 }
