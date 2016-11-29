@@ -16,5 +16,7 @@ export(survCS)
 export(plot.surv)
 export(survCOND)
 export(survIPCW)
+export(summary.surv)
+export(print.surv)
 S3method(plot, surv)
 

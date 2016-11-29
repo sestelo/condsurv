@@ -3,19 +3,10 @@ survIPCW <-
             method.weights = "NW", conf = FALSE, n.boot = 200, conf.level = 0.95,
             lower.tail = FALSE, cluster = FALSE, ncores = NULL)
   {
-    if (missing(object))
-      stop("Argument 'object' is missing, with no default")
-    if (class(object)[1] != "survCS")
-      stop("The argumment 'object' must be of classe 'survCS'")
+
+
     obj <- object[[1]]
-    if (missing(x))
-      x <- 0
-    if (missing(y))
-      y <- max(object[[1]]$Stime)
-    if (length(x) != length(lower.tail))
-      stop("Arguments 'x' and 'lower.tail' must have the same length")
-    if (missing(z.name) | ncol(object[[1]]) < 5)
-      stop("Argument 'z.name' is missing, with no default")
+
     covar <- which(names(object[[1]]) == z.name)
     if (missing(z.value))
       z.value <- mean(object[[1]][, covar])
@@ -38,42 +29,31 @@ survIPCW <-
     lenc <- dim(object[[1]])[2]
     ntimes <- lenc%/%2
 
-    if (any(x < 0))
-      stop("'x' values should be nonnegative")
-    if (any(y < 0))
-      stop("'y' values should be nonnegative")
-    #if (any(y < max(x)))
-     # stop("'y' values should be equal or greater than all values in 'x'")
-    if (length(x) != ntimes-1) {
-      cat("The number of consecutive event times in", substitute(object), "is", ntimes, ". The length of 'x' should be", ntimes-1,"\n")
-      stop("The length of 'x' is not supported for the selected 'object'")
+
+    if(length(z.value) > 1){
+      stop("Argumment 'z' cannot have length greater than 1")
     }
 
-    y <- y[y >= max(x)]
-    y <- sort(unique(y))
 
-    text1 <- paste0("T", c(1:length(x)))
-    text2 <- ifelse(lower.tail == TRUE, "<=", ">")
-    text3 <- paste0(text1, text2, x, collapse = ",")
 
-    z.value <- sort(unique(z.value))
-    if (length(y) > 1 & length(z.value) > 1)
-      stop("Argumments 'y' and 'z' cannot have both length greater than 1")
-    n.auxi <- max(length(y), length(z.value))
+    n.auxi <- length(y)
+
     res <- rep(0, n.auxi)
-    res.li <- rep(0, n.auxi)
-    res.ls <- rep(0, n.auxi)
+
+
+
     if (length(y) == length(z.value)) {
       auxi <- 1
     }
     if (length(y) > length(z.value)) {
       auxi <- 2
     }
-    if (length(y) < length(z.value)) {
-      auxi <- 3
-    }
+
+
+
+
     if (ntimes == 2) {
-      if (auxi == 1 | auxi == 3) {
+      if (auxi == 1) {
         for (j in 1:n.auxi) {
           be <- rep(0, n)
           be2 <- rep(0, n)
@@ -123,6 +103,7 @@ survIPCW <-
         resu <- data.frame(cbind(z.value, res))
         names(resu) <- c("z", "estimate")
       }
+
       if (auxi == 2) {
         for (j in 1:n.auxi) {
           be <- rep(0, n)
@@ -172,7 +153,7 @@ survIPCW <-
       }
     }
     if (ntimes > 2) {
-      if (auxi == 1 | auxi == 3) {
+      if (auxi == 1) {
         for (j in 1:n.auxi) {
           be <- rep(0, n)
           be2 <- rep(0, n)
@@ -257,6 +238,18 @@ survIPCW <-
         names(resu) <- c("y", "estimate")
       }
     }
+
+
+
+
+    ii <- duplicated(resu$estimate)
+    y <- y[!ii]
+
+    n.auxi <- length(y)
+    res.li <- rep(0, n.auxi)
+    res.ls <- rep(0, n.auxi)
+
+
     if (conf == TRUE) {
       simplebootsurvIPCW <- function(object, n, n.auxi, auxi) {
         k <- 1
@@ -267,7 +260,7 @@ survIPCW <-
         ifelse(is.numeric(bw), lbd2 <- bw, lbd2 <- dpik(x = ndata[,
                                                                   covar]))
         if (ntimes == 2) {
-          if (auxi == 1 | auxi == 3) {
+          if (auxi == 1) {
             for (j in 1:n.auxi) {
               be <- rep(0, n)
               be2 <- rep(0, n)
@@ -359,7 +352,7 @@ survIPCW <-
           }
         }
         if (ntimes > 2) {
-          if (auxi == 1 | auxi == 3) {
+          if (auxi == 1) {
             for (j in 1:n.auxi) {
               be <- rep(0, n)
               be2 <- rep(0, n)
@@ -466,70 +459,50 @@ survIPCW <-
         res.ls[k] <- quantile(res.ci[k, ], 1 - (1 - conf.level)/2,
                               na.rm = TRUE)
       }
-      if (auxi == 1 | auxi == 3) {
-        resu <- data.frame(cbind(z.value, res, res.li, res.ls))
-        names(resu) <- c("z", "estimate", "LCI", "UCI")
+      if (auxi == 1) {
+        resu <- data.frame(cbind(z.value, res[!ii], res.li, res.ls))
+        names(resu) <- c("z", "estimate", paste("lower ",conf.level*100,"% CI", sep=""), paste("upper ",conf.level*100,"% CI", sep=""))
       }
       if (auxi == 2) {
-        resu <- data.frame(cbind(y, res, res.li, res.ls))
-        names(resu) <- c("y", "estimate", "LCI", "UCI")
+        resu <- data.frame(cbind(y, res[!ii], res.li, res.ls))
+        names(resu) <- c("y", "estimate", paste("lower ",conf.level*100,"% CI", sep=""), paste("upper ",conf.level*100,"% CI", sep=""))
       }
     }
+
+    text1 <- paste0("T", c(1:length(x)))
+    text2 <- ifelse(lower.tail == TRUE, "<=", ">")
+    text3 <- paste0(text1, text2, x, collapse = ",")
+    callp <- paste("P(T>y|", text3, ",", z.name, "=", z.value, ")", sep = "")
+
     if (conf == FALSE & auxi == 1) {
-      result <- list(est = resu, estimate = res, z.name = z.name,
+      result <- list(est = resu, estimate = res[!ii], z.name = z.name,
                      z.value = z.value, x = x, y = y, bw = bw, window = window,
-                     method.weights = method.weights, conf = conf, lbd = lbd2)
-      cat("P(T>", y, "|", text3, ",", z.name, "=", z.value,
-          ") = ", res, sep = "", "\n")
+                     method.weights = method.weights, conf = conf, lbd = lbd2,
+                     callp = callp)
+
     }
-    if (conf == FALSE & auxi == 3) {
-      result <- list(est = resu, estimate = res, z.name = z.name,
-                     z.value = z.value, x = x, y = y, bw = bw, window = window,
-                     method.weights = method.weights, conf = conf, lbd = lbd2)
-      cat("Estimates of ")
-      cat("P(T>", y, "|", text3, ",", z.name, ")", sep = "",
-          "\n")
-      print(resu)
-    }
+
     if (conf == FALSE & auxi == 2) {
-      result <- list(est = resu, estimate = res, z.name = z.name,
+      result <- list(est = resu, estimate = res[!ii], z.name = z.name,
                      z.value = z.value, x = x, y = y, bw = bw, window = window,
-                     method.weights = method.weights, conf = conf, lbd = lbd2)
-      cat("Estimates of ")
-      cat("P(T>y|", text3, ",", z.name, "=", z.value, ")",
-          sep = "", "\n")
-      print(resu)
+                     method.weights = method.weights, conf = conf, lbd = lbd2,
+                     callp = callp)
     }
     if (conf == TRUE & auxi == 1) {
-      result <- list(est = resu, estimate = res, LCI = res.li,
+      result <- list(est = resu, estimate = res[!ii], LCI = res.li,
                      UCI = res.ls, conf.level = conf.level, z.name = z.name,
                      z.value = z.value, bw = bw, window = window, method.weights = method.weights,
-                     x = x, y = y, conf = conf, lbd = lbd2)
-      cat("P(T>", y, "|", text3, ",", z.name, "=", z.value,
-          ") = ", res, sep = "", "\n")
-      cat("  ", conf.level * 100, "%CI: ", res.li, "-", res.ls,
-          sep = "", "\n")
+                     x = x, y = y, conf = conf, lbd = lbd2, callp = callp)
+
     }
     if (conf == TRUE & auxi == 2) {
-      result <- list(est = resu, estimate = res, LCI = res.li,
+      result <- list(est = resu, estimate = res[!ii], LCI = res.li,
                      UCI = res.ls, conf.level = conf.level, z.name = z.name,
                      z.value = z.value, bw = bw, window = window, method.weights = method.weights,
-                     x = x, y = y, conf = conf, lbd = lbd2)
-      cat("Estimates of ")
-      cat("P(T>y|", text3, ",", z.name, "=", z.value, ")",
-          sep = "", "\n")
-      print(resu)
+                     x = x, y = y, conf = conf, lbd = lbd2, callp = callp)
+
     }
-    if (conf == TRUE & auxi == 3) {
-      result <- list(est = resu, estimate = res, LCI = res.li,
-                     UCI = res.ls, conf.level = conf.level, z.name = z.name,
-                     z.value = z.value, bw = bw, window = window, method.weights = method.weights,
-                     conf = conf, lbd = lbd2)
-      cat("Estimates of ")
-      cat("P(T>", y, "|", text3, ",", z.name, ")", sep = "",
-          "\n")
-      print(resu)
-    }
+
     class(result) <- c("IPCW", "surv")
     return(invisible(result))
   }
