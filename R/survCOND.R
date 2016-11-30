@@ -1,5 +1,5 @@
 survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
-                     presmooth = FALSE, conf = FALSE, n.boot = 100, data,
+                     presmooth = FALSE, conf = FALSE, n.boot = 200, data,
                      conf.level = 0.95, z.value, bw = "dpik", window = "gaussian",
                      method.weights = "NW", cluster = FALSE, ncores = NULL, na.rm = TRUE)
 {

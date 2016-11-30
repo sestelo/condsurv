@@ -8,7 +8,7 @@ Landmark approaches and Inverse probability of censoring weighted.}
   Inverse probability of censoring weighted.}
  \usage{
    survCOND(formula, x, y, lower.tail = FALSE, method = "LDM",
-   presmooth = FALSE, conf = FALSE, n.boot = 100, data,
+   presmooth = FALSE, conf = FALSE, n.boot = 200, data,
    conf.level = 0.95, z.value, bw = "dpik", window = "gaussian",
    method.weights = "NW", cluster = FALSE, ncores = NULL, na.rm = TRUE)
  }
@@ -29,7 +29,7 @@ Landmark approaches and Inverse probability of censoring weighted.}
    \item{presmooth}{A logical value. If  \code{TRUE}, the presmoothed landmark estimator of the
      conditional survival function is computed. Only valid for method = "LDM".}
    \item{conf}{Provides pointwise confidence bands. Defaults to FALSE.}
-   \item{n.boot}{The number of bootstrap samples. Defaults to 100 samples.}
+   \item{n.boot}{The number of bootstrap samples. Defaults to 200 samples.}
     \item{data}{A data frame in which to interpret the variables named
     in the \code{formula} argument.}
    \item{conf.level}{Level of confidence. Defaults to 0.95 (corresponding to 95\%).}
