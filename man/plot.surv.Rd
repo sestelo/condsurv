@@ -12,12 +12,12 @@
   \item{x}{An object of class "surv".}
   \item{y}{\code{NULL}}
   \item{conf}{Draw the confidence intervals into the plot. By default it is
-  \code{NULL} (they are drawn if the "surv" object contains them.}
-  \item{type}{The type of plot should be drawn. See details \code{\link{par}}
-  for possible options. Defaults to "l" for the draw be a line.}
-  \item{conftype}{The type of plot should be drawn for confidence intervals.
+  \code{NULL}, they are drawn if the "surv" object contains them.}
+  \item{type}{The type of plot that should be drawn. See details \code{\link{par}}
+  for possible options. Defaults to "s" for the draw be stair steps.}
+  \item{conftype}{The type of plot that should be drawn for confidence intervals.
   See details \code{\link{par}}
-  for possible options. Defaults to "l" for the draw be a line.}
+  for possible options. Defaults to "s" for the draw be stair steps.}
   \item{col}{Vector of colors. Colors are used cyclically.}
   \item{confcol}{Vector of colors for the confidence intervals.
   Colors are used cyclically.}

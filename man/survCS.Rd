@@ -1,7 +1,7 @@
 \name{survCS}
 \alias{survCS}
 \title{Create a survCS object.}
-\description{Creates a "survCS" object, usually used as input to other functions.}
+\description{Creates a "survCS" object, usually used as a response variable in a model formula.}
 \usage{
 survCS(time1, event1, Stime, event, ...)
 }
@@ -20,7 +20,7 @@ order: time1, event1, time2, ..., Stime and event, where time1,
 time2, ..., Stime are ordered event times and event1, event2,..., event
 their corresponding indicator statuses.}
 
-\value{An object of class "survCS" and of class "surv". "survCS" objected
+\value{An object of class "survCS" and of class "surv". "survCS" objects
 are implemented as a single element list. }
 
 \author{Luis Meira-Machado and Marta Sestelo}

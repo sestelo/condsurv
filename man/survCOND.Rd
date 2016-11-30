@@ -16,7 +16,7 @@ Landmark approaches and Inverse probability of censoring weighted.}
  \arguments{
    \item{formula}{A formula object, which must have a \code{survCS} object
    as the response on the left of the \code{~} operator and, if desired,
-    a term on the right. The term may be a cualitative or cuantitative variable.
+    a term on the right. The term may be a qualitative or quantitative variable.
     For a single survival curve the right hand side should be ~ 1.}
    \item{x}{Time or vector of times for the condional event(s).}
    \item{y}{The total time for obtaining estimates for the conditional survival probabilities.}
@@ -25,15 +25,16 @@ Landmark approaches and Inverse probability of censoring weighted.}
      If the conditional event is 2-dimensional, then, for example, given x = c(x1, x2) and lower.tail = c(TRUE, FALSE)
      must be used to obtain probabilities P(T > y|T1 <= x1, T2 > x2). Multi-dimensional conditional events are introduced similarly.}
    \item{method}{The method used to compute the conditional survival function.
-     Possible options are "LDM", "KMW" and "IPCW". Defaults to "LDM".}
+     Possible options are "LDM" and "KMW". Defaults to "LDM".}
    \item{presmooth}{A logical value. If  \code{TRUE}, the presmoothed landmark estimator of the
-     conditional survival function is computed.}
+     conditional survival function is computed. Only valid for method = "LDM".}
    \item{conf}{Provides pointwise confidence bands. Defaults to FALSE.}
-   \item{n.boot}{The number of bootstrap samples. Defaults to 1000 samples.}
+   \item{n.boot}{The number of bootstrap samples. Defaults to 100 samples.}
     \item{data}{A data frame in which to interpret the variables named
-    in the \code{formula} and \code{subset} arguments.}
+    in the \code{formula} argument.}
    \item{conf.level}{Level of confidence. Defaults to 0.95 (corresponding to 95\%).}
-   \item{z.value}{The value of the covariate ("z.name") at which the conditional survival probabilities are computed.}
+   \item{z.value}{The value of the covariate on the right hand side of formula at which the conditional
+   survival probabilities are computed. For quantitative covariates, i.e. of class integer and numeric.}
    \item{bw}{A single numeric value to compute a kernel density bandwidth.
   Use "dpik" for the KernSmooth package based selector or "np" for the
   'npudensbw' function of the np package. }
@@ -69,10 +70,11 @@ Landmark approaches and Inverse probability of censoring weighted.}
     \item{conf.level}{Level of confidence.}
      \item{y}{The total time for obtaining the estimates of the conditional survival probabilities.}
    \item{x}{The first time for obtaining the estimates of the conditional survival probabilities.}
-   \item{Nlevels}{The number of levels of the covariate.}
+   \item{Nlevels}{The number of levels of the covariate. Provides important information when the
+   covariate at the right hand side of formula is of class factor.}
    \item{conf}{logical; if FALSE (default) the pointwise confidence bands are not given.}
    \item{callp}{The expression of the estimated probability.}
-   \item{levels}{The levels of the covariate.}
+   \item{levels}{The levels of the qualitative covariate (if it is of class factor) on the right hand side of formula.}
 
 
  }

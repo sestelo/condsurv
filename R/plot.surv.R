@@ -17,8 +17,8 @@ plot.surv <-
 
     ob <- object$est
 
-    if (is.null(type)) type <- "l"
-    if (is.null(conftype)) conftype <- "l"
+    if (is.null(type)) type <- "s"
+    if (is.null(conftype)) conftype <- "s"
 
 
     if (is.null(conf)){
