@@ -100,26 +100,28 @@ survIPCW <-
               res[j] <- 0
           }
         }
-        resu <- data.frame(cbind(z.value, res))
-        names(resu) <- c("z", "estimate")
+        resu <- data.frame(cbind(y, res))
+        names(resu) <- c("y", "estimate")
       }
 
       if (auxi == 2) {
+
+        be <- rep(0, n)
+        be2 <- rep(0, n)
+        for (k in 1:n) {
+          be[k] <- Beran(object[[1]]$Stime, 1 - object[[1]]$event,
+                         object[[1]][, covar], delta4, z.value, object[[1]]$Stime[k],
+                         kernel = window, bw = lbd2)
+          be2[k] <- Beran(object[[1]]$time1, 1 - object[[1]]$event1,
+                          object[[1]][, covar], delta4, z.value, object[[1]]$time1[k],
+                          kernel = window, bw = lbd2)
+        }
+        ifelse(method.weights == "NW", w1 <- NWW(object[[1]][,
+                                                             covar], z.value, kernel = window, bw = lbd2),
+               w1 <- LLW(object[[1]][, covar], bw = lbd2, t1 = z.value))
+
         for (j in 1:n.auxi) {
-          be <- rep(0, n)
-          be2 <- rep(0, n)
-          for (k in 1:n) {
-            be[k] <- Beran(object[[1]]$Stime, 1 - object[[1]]$event,
-                           object[[1]][, covar], delta4, z.value, object[[1]]$Stime[k],
-                           kernel = window, bw = lbd2)
-            be2[k] <- Beran(object[[1]]$time1, 1 - object[[1]]$event1,
-                            object[[1]][, covar], delta4, z.value, object[[1]]$time1[k],
-                            kernel = window, bw = lbd2)
-          }
-          ifelse(method.weights == "NW", w1 <- NWW(object[[1]][,
-                                                               covar], z.value, kernel = window, bw = lbd2),
-                 w1 <- LLW(object[[1]][, covar], bw = lbd2,
-                           t1 = z.value))
+
           if (lower.tail == FALSE) {
             p1 <- which(object[[1]]$Stime <= y[j] & object[[1]]$time1 >
                           x & object[[1]]$event == 1)
@@ -192,26 +194,27 @@ survIPCW <-
               res[j] <- 0
           }
         }
-        resu <- data.frame(cbind(z.value, res))
-        names(resu) <- c("z", "estimate")
+        resu <- data.frame(cbind(y, res))
+        names(resu) <- c("y", "estimate")
       }
       if (auxi == 2) {
+
+        be <- rep(0, n)
+        be2 <- rep(0, n)
+        for (k in 1:n) {
+          be[k] <- Beran(object[[1]]$Stime, 1 - object[[1]]$event,
+                         object[[1]][, covar], delta4, z.value[j],
+                         object[[1]]$Stime[k], kernel = window, bw = lbd2)
+          be2[k] <- Beran(object[[1]][, 2 * ntimes -
+                                        3], 1 - object[[1]][, 2 * ntimes - 2], object[[1]][,
+                                                                                           covar], delta4, z.value[j], object[[1]][k,
+                                                                                                                                   2 * ntimes - 3], kernel = window, bw = lbd2)
+        }
+        ifelse(method.weights == "NW", w1 <- NWW(object[[1]][,
+                                                             covar], z.value, kernel = window, bw = lbd2),
+               w1 <- LLW(object[[1]][, covar], bw = lbd2, t1 = z.value))
+
         for (j in 1:n.auxi) {
-          be <- rep(0, n)
-          be2 <- rep(0, n)
-          for (k in 1:n) {
-            be[k] <- Beran(object[[1]]$Stime, 1 - object[[1]]$event,
-                           object[[1]][, covar], delta4, z.value[j],
-                           object[[1]]$Stime[k], kernel = window, bw = lbd2)
-            be2[k] <- Beran(object[[1]][, 2 * ntimes -
-                                          3], 1 - object[[1]][, 2 * ntimes - 2], object[[1]][,
-                                                                                             covar], delta4, z.value[j], object[[1]][k,
-                                                                                                                                     2 * ntimes - 3], kernel = window, bw = lbd2)
-          }
-          ifelse(method.weights == "NW", w1 <- NWW(object[[1]][,
-                                                               covar], z.value, kernel = window, bw = lbd2),
-                 w1 <- LLW(object[[1]][, covar], bw = lbd2,
-                           t1 = z.value))
           X <- data.frame(object[[1]][, 2 * (1:ntimes) -
                                         1])
           pos1 <- whichCS(X, x = x, lower.tail = lower.tail)
@@ -238,8 +241,6 @@ survIPCW <-
         names(resu) <- c("y", "estimate")
       }
     }
-
-
 
 
     ii <- duplicated(resu$estimate)
@@ -306,20 +307,22 @@ survIPCW <-
             }
           }
           if (auxi == 2) {
+
+            be <- rep(0, n)
+            be2 <- rep(0, n)
+            for (i in 1:n) {
+              be[i] <- Beran(ndata$Stime, 1 - ndata$event,
+                             ndata[, covar], delta4, z.value, ndata$Stime[i],
+                             kernel = window, bw = lbd2)
+              be2[i] <- Beran(ndata$time1, 1 - ndata$event1,
+                              ndata[, covar], delta4, z.value, ndata$time1[i],
+                              kernel = window, bw = lbd2)
+            }
+            ifelse(method.weights == "NW", w1 <- NWW(ndata[,
+                                                           covar], z.value, kernel = window, bw = lbd2),
+                   w1 <- LLW(ndata[, covar], bw = lbd2, t1 = z.value))
+
             for (j in 1:n.auxi) {
-              be <- rep(0, n)
-              be2 <- rep(0, n)
-              for (i in 1:n) {
-                be[i] <- Beran(ndata$Stime, 1 - ndata$event,
-                               ndata[, covar], delta4, z.value, ndata$Stime[i],
-                               kernel = window, bw = lbd2)
-                be2[i] <- Beran(ndata$time1, 1 - ndata$event1,
-                                ndata[, covar], delta4, z.value, ndata$time1[i],
-                                kernel = window, bw = lbd2)
-              }
-              ifelse(method.weights == "NW", w1 <- NWW(ndata[,
-                                                             covar], z.value, kernel = window, bw = lbd2),
-                     w1 <- LLW(ndata[, covar], bw = lbd2, t1 = z.value))
               if (lower.tail == FALSE) {
                 p1 <- which(ndata$Stime <= y[j] & ndata$time1 >
                               x & ndata$event == 1)
@@ -393,23 +396,21 @@ survIPCW <-
             }
           }
           if (auxi == 2) {
+
+            be <- rep(0, n)
+            be2 <- rep(0, n)
+            for (i in 1:n) {
+              be[i] <- Beran(ndata$Stime, 1 - ndata$event,
+                             ndata[, covar], delta4, z.value, ndata$Stime[i],
+                             kernel = window, bw = lbd2)
+              be2[i] <- Beran(ndata[, 2 * ntimes - 3], 1 - ndata[, 2 * ntimes - 2], ndata[, covar],
+                              delta4, z.value, ndata[i, 2 * ntimes - 3], kernel = window, bw = lbd2)
+            }
+            ifelse(method.weights == "NW", w1 <- NWW(ndata[, covar], z.value, kernel = window, bw = lbd2),
+                   w1 <- LLW(ndata[, covar], bw = lbd2, t1 = z.value))
+
             for (j in 1:n.auxi) {
-              be <- rep(0, n)
-              be2 <- rep(0, n)
-              for (i in 1:n) {
-                be[i] <- Beran(ndata$Stime, 1 - ndata$event,
-                               ndata[, covar], delta4, z.value, ndata$Stime[i],
-                               kernel = window, bw = lbd2)
-                be2[i] <- Beran(ndata[, 2 * ntimes - 3],
-                                1 - ndata[, 2 * ntimes - 2], ndata[,
-                                                                   covar], delta4, z.value, ndata[i, 2 *
-                                                                                                    ntimes - 3], kernel = window, bw = lbd2)
-              }
-              ifelse(method.weights == "NW", w1 <- NWW(ndata[,
-                                                             covar], z.value, kernel = window, bw = lbd2),
-                     w1 <- LLW(ndata[, covar], bw = lbd2, t1 = z.value))
-              X <- data.frame(ndata[, 2 * (1:ntimes) -
-                                      1])
+              X <- data.frame(ndata[, 2 * (1:ntimes) - 1])
               pos1 <- whichCS(X, x = x, lower.tail = lower.tail)
               pos2 <- which(ndata$Stime <= y & ndata$event ==
                               1)
@@ -460,8 +461,8 @@ survIPCW <-
                               na.rm = TRUE)
       }
       if (auxi == 1) {
-        resu <- data.frame(cbind(z.value, res[!ii], res.li, res.ls))
-        names(resu) <- c("z", "estimate", paste("lower ",conf.level*100,"% CI", sep=""), paste("upper ",conf.level*100,"% CI", sep=""))
+        resu <- data.frame(cbind(y, res[!ii], res.li, res.ls))
+        names(resu) <- c("y", "estimate", paste("lower ",conf.level*100,"% CI", sep=""), paste("upper ",conf.level*100,"% CI", sep=""))
       }
       if (auxi == 2) {
         resu <- data.frame(cbind(y, res[!ii], res.li, res.ls))
