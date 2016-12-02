@@ -5,6 +5,7 @@ print.surv <- function(x, ...){
   print(x$call)
   cat("\nMethod:\n")
 
+  if(class(x)[1] == "survCS") method <- NULL
   if(class(x)[1] == "KMW") method <- "Kaplan-Meier weights"
   if(class(x)[1] == "LDM") method <- "Landmark approach"
   if(class(x)[1] == "PLDM") method <- "Presmoothed Landmark approach"
