@@ -20,7 +20,7 @@ censoring probability for the survival time, given the available information is 
 \author{
 Luis Meira-Machado and Marta Sestelo.
 
-Maintainer: Luis Meira-Machado, lmachado@math.uminho.pt
+Maintainer: Marta Sestelo, sestelo@uvigo.es
 }
 
 \references{
