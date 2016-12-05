@@ -7,3 +7,15 @@ This file documents software changes since the previous edition.
   * the survKMW, survLDM and survPLDM functions were merged in a single function survCOND (with a 'method' argument).
 
 
+
+# condSURV 2.0.0 (2016-12-05)
+
+  * the survCOND and the survIPCW functions have been merged in just one (survCOND).
+
+  * the survCOND function presents now a new argument formula similar to that in survfit function of the survival package. The cited formula object must be created, with the response on the left of a ′ ∼′ operator. The response must be a surv object which is obtained using the survCS function. Additionally, a single covariate (qualitative or quantita- tive) can be included in the right hand side of the formula allowing the estimation of survival probabilities conditionally on current or past covariate measures.
+
+  * we have created a summary.surv function which can be used to to get the estimated values of the conditional probability at the desired values of “y” by means of the times argument.
+
+  * the plot.surv function has been improved.
+
+
