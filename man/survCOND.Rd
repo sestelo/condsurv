@@ -8,7 +8,7 @@ Landmark approaches and Inverse probability of censoring weighted.}
   Inverse probability of censoring weighted.}
  \usage{
    survCOND(formula, x, y, lower.tail = FALSE, method = "LDM",
-   presmooth = FALSE, conf = FALSE, n.boot = 200, data,
+   presmooth = FALSE, conf = TRUE, n.boot = 200, data,
    conf.level = 0.95, z.value, bw = "dpik", window = "gaussian",
    method.weights = "NW", cluster = FALSE, ncores = NULL, na.rm = TRUE)
  }
@@ -28,7 +28,7 @@ Landmark approaches and Inverse probability of censoring weighted.}
      Possible options are "LDM" and "KMW". Defaults to "LDM".}
    \item{presmooth}{A logical value. If  \code{TRUE}, the presmoothed landmark estimator of the
      conditional survival function is computed. Only valid for method = "LDM".}
-   \item{conf}{Provides pointwise confidence bands. Defaults to FALSE.}
+   \item{conf}{Provides pointwise confidence bands. Defaults to TRUE.}
    \item{n.boot}{The number of bootstrap samples. Defaults to 200 samples.}
     \item{data}{A data frame in which to interpret the variables named
     in the \code{formula} argument.}
@@ -61,7 +61,7 @@ Landmark approaches and Inverse probability of censoring weighted.}
 
  }
 
- \value{An object of class "surv" and one of the following four classes:
+ \value{An object of class "survCS" and one of the following four classes:
  "KMW", "LMD", "PLDM" and "IPCW". Objects are implemented as a list with elements:
      \item{est}{data.frame with estimates of the conditional probabilities.}
    \item{estimate}{Estimates of the conditional survival probability.}
@@ -95,13 +95,13 @@ for ordered multivariate failure time data: a comparative study. Biometrical Jou
  \examples{
 
    fit <- survCOND(survCS(time1, event1, Stime, event) ~ 1, x = 365, y = 730,
-   data = colonCS, method = "KMW")
+   data = colonCS, method = "KMW", conf = FALSE)
 
    fit1 <- survCOND(survCS(time1, event1, Stime, event) ~ 1, x = 365,
-   data = colonCS, method = "LDM")
+   data = colonCS, method = "LDM", conf = FALSE)
 
    fit2 <- survCOND(survCS(time1, event1, Stime, event) ~ 1, x = 365,
-   data = colonCS, method = "LDM", lower.tail = TRUE)
+   data = colonCS, method = "LDM", lower.tail = TRUE, conf = FALSE)
 
    fit3 <- survCOND(survCS(time1, event1, Stime, event) ~ 1, x = 365,
    y = c(730, 1095, 1460), data = colonCS, method = "LDM", presmooth = TRUE,
@@ -109,10 +109,10 @@ for ordered multivariate failure time data: a comparative study. Biometrical Jou
    cluster = FALSE)
 
    fit4 <- survCOND(survCS(time1, event1, Stime, event) ~ rx, x = 365,
-   data = colonCS, method = "LDM")
+   data = colonCS, method = "LDM", conf = FALSE)
 
    fit5 <- survCOND(survCS(time1, event1, Stime, event) ~ factor(sex),
-   x = 365, data = colonCS, method = "LDM")
+   x = 365, data = colonCS, method = "LDM", conf = FALSE)
 
   \dontrun{
    fit6 <- survCOND(survCS(time1, event1, Stime, event) ~ age,

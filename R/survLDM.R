@@ -84,6 +84,6 @@ survLDM <-
     if(conf==TRUE) {
       result <- list(est=resu, estimate=res[!ii], LCI=res.li, UCI=res.ls, conf.level=conf.level, y=y, x=x, conf=conf)
     }
-    class(result) <- c("LDM", "surv")
+    class(result) <- c("LDM", "survCS")
     return(invisible(result))
   }

@@ -1,15 +1,15 @@
-\name{summary.surv}
-\alias{summary.surv}
-\alias{print.surv}
-\title{Summarizing fits of \code{surv} class}
+\name{summary.survCS}
+\alias{summary.survCS}
+\alias{print.survCS}
+\title{Summarizing fits of \code{survCS} class}
 \description{Returns a a data.frame or list containing the estimates of
 the conditional survival, its confidence limits and other information. }
 \usage{
-  \method{summary}{surv}(object, times = NULL, ...)
+  \method{summary}{survCS}(object, times = NULL, ...)
 }
 
   \arguments{
-\item{object}{A fitted \code{surv} object as produced by \code{survCOND()}.}
+\item{object}{A fitted \code{survCS} object as produced by \code{survCOND()}.}
 \item{times}{Vector of times; the returned data frame will contain 1 row
 for each time. Missing values are not allowed.}
 \item{...}{For future methods.}

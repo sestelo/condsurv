@@ -30,6 +30,5 @@ American Statistical Association, 53:457-481, 1958.
 
 \examples{
 obj <- with(colonCS, survCS(time1, event1, Stime, event))
-obj0 <- obj$data
-PKM(time = obj0$Stime, status = obj0$event, t = 1095)
+PKM(time = obj$Stime, status = obj$event, t = 1095)
 }

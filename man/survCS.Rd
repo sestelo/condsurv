@@ -21,7 +21,7 @@ time2, ..., Stime are ordered event times and event1, event2,..., event
 their corresponding indicator statuses.}
 
 \value{An object of class "survCS" and of class "surv". "survCS" objects
-are implemented as a single element list. }
+are implemented as a single dataframe. }
 
 \author{Luis Meira-Machado and Marta Sestelo}
 

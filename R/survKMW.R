@@ -2,6 +2,8 @@ survKMW <-
   function(object, x, y, conf = FALSE, n.boot = 1000, conf.level = 0.95,
            lower.tail = FALSE, cluster = FALSE, ncores = NULL, na.rm=T)
   {
+
+
     lenc <- dim(object[[1]])[2]
     ntimes <- lenc%/%2
 
@@ -213,7 +215,7 @@ survKMW <-
 
     if(conf == TRUE) { result <- list(est = resu, estimate = res[!ii], LCI = res.li, UCI = res.ls, conf.level = conf.level, y = y, x = x, conf = conf) }
 
-    class(result) <- c("KMW", "surv")
+    class(result) <- c("KMW", "survCS")
     return(invisible(result))
   }
 

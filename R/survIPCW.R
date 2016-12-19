@@ -504,7 +504,7 @@ survIPCW <-
 
     }
 
-    class(result) <- c("IPCW", "surv")
+    class(result) <- c("IPCW", "survCS")
     return(invisible(result))
   }
 

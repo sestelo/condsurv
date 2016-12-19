@@ -1,5 +1,5 @@
 survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
-                     presmooth = FALSE, conf = FALSE, n.boot = 200, data,
+                     presmooth = FALSE, conf = TRUE, n.boot = 200, data,
                      conf.level = 0.95, z.value, bw = "dpik", window = "gaussian",
                      method.weights = "NW", cluster = FALSE, ncores = NULL, na.rm = TRUE)
 {
@@ -16,6 +16,9 @@ survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
 
   object <- with(data = data, eval(mf))
   if (!inherits(object, "survCS")) stop("Response must be a survCS object")
+
+  object <- list(data = object) # new since survCS doesn't return a list
+
   obj_data <- object[[1]]
 
   X <- Terms[[3]]
@@ -108,7 +111,7 @@ survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
                      n.boot = n.boot, conf.level = conf.level,
                      lower.tail = lower.tail, cluster = cluster,
                      ncores = ncores)
-      class(res) <- c("LDM", "surv")
+      class(res) <- c("LDM", "survCS")
     }
 
     if (method == "LDM" & presmooth == TRUE) {
@@ -117,7 +120,7 @@ survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
                                        conf.level = conf.level,
                                        lower.tail = lower.tail,
                                        cluster = cluster, ncores = ncores))
-      class(res) <- c("PLDM", "surv")
+      class(res) <- c("PLDM", "survCS")
     }
 
     if (method == "KMW")  {
@@ -125,7 +128,7 @@ survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
                      n.boot = n.boot, conf.level = conf.level,
                      lower.tail = lower.tail, cluster = cluster,
                      ncores = ncores, na.rm = na.rm)
-      class(res) <- c("KMW", "surv")
+      class(res) <- c("KMW", "survCS")
     }
 
 
@@ -168,7 +171,7 @@ survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
                        n.boot = n.boot, conf.level = conf.level,
                        lower.tail = lower.tail, cluster = cluster,
                        ncores = ncores)
-        class(res) <- c("LDM", "surv")
+        class(res) <- c("LDM", "survCS")
       }
 
       if (method == "LDM" & presmooth == TRUE) {
@@ -177,7 +180,7 @@ survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
                                          conf.level = conf.level,
                                          lower.tail = lower.tail,
                                          cluster = cluster, ncores = ncores))
-        class(res) <- c("PLDM", "surv")
+        class(res) <- c("PLDM", "survCS")
       }
 
       if (method == "KMW")  {
@@ -185,7 +188,7 @@ survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
                        n.boot = n.boot, conf.level = conf.level,
                        lower.tail = lower.tail, cluster = cluster,
                        ncores = ncores, na.rm = na.rm)
-        class(res) <- c("KMW", "surv")
+        class(res) <- c("KMW", "survCS")
       }
 
       if (conf == TRUE) {

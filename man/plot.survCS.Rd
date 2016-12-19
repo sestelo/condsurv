@@ -1,15 +1,15 @@
-\name{plot.surv}
-\alias{plot.surv}
-\title{Plot for an object of class "surv".}
+\name{plot.survCS}
+\alias{plot.survCS}
+\title{Plot for an object of class "survCS".}
 \description{It draws the estimated conditional survival probabilities. }
 \usage{
-\method{plot}{surv}(x = object, y = NULL, conf = NULL,  type = NULL, conftype = NULL,
+\method{plot}{survCS}(x = object, y = NULL, conf = NULL,  type = NULL, conftype = NULL,
            col = 1:6, confcol = 1:6, lty = 1, conflty = 2,
-           xlab = "Time", ylab = "Probability", ...)
+           xlab = "Time", ylab = "Survival", ylim = NULL, xlim = NULL, ...)
 }
 
 \arguments{
-  \item{x}{An object of class "surv".}
+  \item{x}{An object of class "survCS".}
   \item{y}{\code{NULL}}
   \item{conf}{Draw the confidence intervals into the plot. By default it is
   \code{NULL}, they are drawn if the "surv" object contains them.}
@@ -29,6 +29,8 @@
   3 = dotted, 4 = dotdash, 5 = longdash, 6 = twodash).}
   \item{xlab}{A title for the \code{x} axis: see \code{\link{title}}.}
   \item{ylab}{A title for the \code{y} axis: see \code{\link{title}}.}
+  \item{ylim}{The \code{y} limits of the plot.}
+  \item{xlim}{The \code{x} limits of the plot.}
   \item{\dots}{Other options.}
 }
 
