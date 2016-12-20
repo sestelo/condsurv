@@ -82,7 +82,7 @@ survCOND <- function(formula, x, y, lower.tail = FALSE, method = "LDM",
                     method.weights = method.weights, conf = conf, n.boot = n.boot,
                     conf.level = conf.level, lower.tail = lower.tail, cluster = cluster, ncores = ncores)
 
-    class(res) <- c("IPCW", "surv")
+    class(res) <- c("IPCW", "survCS")
 
     if (length(y) == 1) resu <- res$est
     if (length(y) > 1 & conf == TRUE) {

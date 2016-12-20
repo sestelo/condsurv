@@ -44,17 +44,20 @@ plot.survCS <- function(x = object, y = NULL, conf = NULL, type = NULL,
       }
 
 
+#
+#       if (is.null(ylim)) {
+#         if (object$Nlevels == 1) {
+#           ymin <- ifelse(ci == TRUE, min(ob[, 3]), min(ob[, 2]))
+#         }else{
+#           ymin <- ifelse(ci == TRUE,
+#                          min(sapply(ob, function(x) min(x[, 3]), simplify = TRUE)),
+#                          min(sapply(ob, function(x) min(x[, 2]), simplify = TRUE)))
+#         }
+#         ylim <- c(ymin, 1)
+#       }
 
-      if (is.null(ylim)) {
-        if (object$Nlevels == 1) {
-          ymin <- ifelse(ci == TRUE, min(ob[, 3]), min(ob[, 2]))
-        }else{
-          ymin <- ifelse(ci == TRUE,
-                         min(sapply(ob, function(x) min(x[, 3]), simplify = TRUE)),
-                         min(sapply(ob, function(x) min(x[, 2]), simplify = TRUE)))
-        }
-        ylim <- c(ymin, 1)
-      }
+
+      if (is.null(ylim)) ylim <- c(0, 1)
 
 
       if (is.null(xlim) & object$Nlevels > 1) {

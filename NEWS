@@ -19,3 +19,13 @@ This file documents software changes since the previous edition.
   * the plot.surv function has been improved.
 
 
+
+
+
+# condSURV 2.0.1 (2016-12-20)
+
+  * the 'surv' class has been removed. Now, the main class is 'survCS'.
+
+  * the 'conf' argument of the survCOND function is TRUE by default.
+
+
