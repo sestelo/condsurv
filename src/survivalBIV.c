@@ -5,7 +5,7 @@
 
 /*
 Author:
-	Artur Araújo (adapted from 'rcmp')
+	Artur Araujo (adapted from 'rcmp')
 
 Description:
 	Compares two double values.
@@ -31,7 +31,7 @@ static int cmp_doubles(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'x' by increasing order with 'indx' and 'indy' alongside.
@@ -77,7 +77,7 @@ static void sort_univ_index(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'x' by increasing order with 'indx', 'y' and 'indy' alongside.
@@ -128,7 +128,7 @@ static void sort_biv(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'x' by increasing order with 'indx', 'y' and 'z' alongside.
@@ -179,7 +179,7 @@ static void sort_biv_stime(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'x' by increasing order with 'indx' and 'y' alongside.
@@ -225,7 +225,7 @@ static void sort_biv_time(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'x' by increasing order with 'indx', 'y' and 'z' alongside.
@@ -276,7 +276,7 @@ static void sort_biv_data(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'indx' by decreasing order with x and y alongside.
@@ -322,7 +322,7 @@ static void sort_double_rev(
 
 /*
 Author:
-	Artur Araújo (adapted from 'icmp')
+	Artur Araujo (adapted from 'icmp')
 
 Description:
 	Compares two int values.
@@ -348,7 +348,7 @@ static int cmp_ints(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'indx' by decreasing order with 'x' alongside.
@@ -388,7 +388,7 @@ static void sort_int_rev_index(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'indx' by decreasing order with x and y alongside.
@@ -434,7 +434,7 @@ static void sort_int_rev(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Restores the elements of a sorted double vector back
@@ -476,7 +476,7 @@ static void sort_back_double(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'indx' by increasing order with 'x', 'indy' and 'y' alongside.
@@ -527,7 +527,7 @@ static void sort_back_univ_weights(
 
 /*
 Author:
-	Artur Araújo (adapted from 'rsort_with_index')
+	Artur Araujo (adapted from 'rsort_with_index')
 
 Description:
 	Sorts 'indx' by increasing order with 'x', 'indy' and 'y' alongside.
@@ -578,7 +578,7 @@ static void sort_back_univ_weights_double(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Sorts time1 by increasing order with delta alongside.
@@ -627,7 +627,7 @@ static int sort_univ_surv_index(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Sorts time1 by increasing order with delta alongside.
@@ -676,7 +676,7 @@ static int sort_univ_surv_index_double(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Sorts Stime by increasing order with status alongside.
@@ -721,7 +721,7 @@ static void sort_biv_surv_stime(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Sorts Stime by increasing order with m alongside.
@@ -766,7 +766,7 @@ static void sort_biv_surv(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes a single probability value at a specified time index.
@@ -809,7 +809,7 @@ void KaplanMeierValue(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Sorts time and status and then calls 'KaplanMeierValue'.
@@ -847,7 +847,7 @@ void KaplanMeierValueSort(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes probabilities indexed at the unique times up to a specified
@@ -898,7 +898,7 @@ void KaplanMeierVector(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Sorts time and status and then calls 'KaplanMeierVector'.
@@ -940,7 +940,7 @@ void KaplanMeierVectorSort(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes a single probability value at a specified time index.
@@ -993,7 +993,7 @@ void WeightedKaplanMeierValue(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Sorts time2, status, weights and delta and then calls 'WeightedKaplanMeierValue'.
@@ -1035,7 +1035,7 @@ void WeightedKaplanMeierValueSort(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes probabilities indexed at the unique times up to a specified
@@ -1102,7 +1102,7 @@ void WeightedKaplanMeierVector(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Sorts time2, status, weights and delta and then calls 'WeightedKaplanMeierVector'.
@@ -1149,7 +1149,7 @@ void WeightedKaplanMeierVectorSort(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the Kaplan-Meier weights of a given delta vector.
@@ -1186,7 +1186,7 @@ void WeightsKaplanMeier(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Calls 'sort_univ_surv_index' to sort time1 and delta
@@ -1224,7 +1224,7 @@ void WeightsKaplanMeierSort(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the Kaplan-Meier weights of a given delta vector.
@@ -1261,7 +1261,7 @@ void WeightsKaplanMeierEx(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Calls 'sort_univ_surv_index_double' to sort time1 and delta
@@ -1299,7 +1299,7 @@ void WeightsKaplanMeierSortEx(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes nearest neighbour weights.
@@ -1368,7 +1368,7 @@ void WeightsNNE(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes nearest neighbour Nadaraya-Watson weights.
@@ -1407,7 +1407,7 @@ void NWWeightsNNE(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes local linear nearest neighbour weights.
@@ -1455,7 +1455,7 @@ void LLWeightsNNE(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes weights based on a kernel.
@@ -1533,7 +1533,7 @@ void WeightsKernel(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the Nadaraya-Watson weights.
@@ -1572,7 +1572,7 @@ void NWWeightsKernel(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes local linear weights based on a kernel.
@@ -1620,7 +1620,7 @@ void LLWeightsKernel(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the conditional survival probability P(T2>t2|T1=t1).
@@ -1664,7 +1664,7 @@ void SurvBeranNNE(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the conditional survival probability P(T2>t2|T1=t1).
@@ -1708,7 +1708,7 @@ void SurvBeranKernel(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the bivariate probability P(T2<=t2,T1<=t1).
@@ -1765,7 +1765,7 @@ void BivDistBeranNNE(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the bivariate probability P(T2<=t2,T1<=t1).
@@ -1822,7 +1822,7 @@ void BivDistBeranKernel(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the bivariate probability P(T2<=t2,T1<=t1).
@@ -1876,7 +1876,7 @@ void BivDistCKM(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the bivariate probability P(T2<=t2,T1<=t1).
@@ -1923,7 +1923,7 @@ void BivDistKMW(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the bivariate probability P(T2<=t2,T1<=t1).
@@ -1970,7 +1970,7 @@ void BivDistKMPW(
 
 /*
 Author:
-	Artur Araújo
+	Artur Araujo
 
 Description:
 	Computes the bivariate probability P(T2<=t2,T1<=t1).

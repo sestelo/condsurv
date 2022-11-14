@@ -1,3 +1,48 @@
+#' Plot for an object of class "survCS".
+#' 
+#' It draws the estimated conditional survival probabilities.
+#' 
+#' 
+#' @param x An object of class "survCS".
+#' @param y \code{NULL}
+#' @param conf Draw the confidence intervals into the plot. By default it is
+#' \code{NULL}, they are drawn if the "surv" object contains them.
+#' @param type The type of plot that should be drawn. See details
+#' \code{\link{par}} for possible options. Defaults to "s" for the draw be
+#' stair steps.
+#' @param conftype The type of plot that should be drawn for confidence
+#' intervals.  See details \code{\link{par}} for possible options. Defaults to
+#' "s" for the draw be stair steps.
+#' @param col Vector of colors. Colors are used cyclically.
+#' @param confcol Vector of colors for the confidence intervals.  Colors are
+#' used cyclically.
+#' @param lty The line type. Line types can either be specified as an integer
+#' (0 = blank, 1 = solid (default), 2 = dashed, 3 = dotted, 4 = dotdash, 5 =
+#' longdash, 6 = twodash).  See details in \code{\link{par}}.
+#' @param conflty The line type for confidence intervals. Line types can either
+#' be specified as an integer (0 = blank, 1 = solid (default), 2 = dashed, 3 =
+#' dotted, 4 = dotdash, 5 = longdash, 6 = twodash).
+#' @param xlab A title for the \code{x} axis: see \code{\link{title}}.
+#' @param ylab A title for the \code{y} axis: see \code{\link{title}}.
+#' @param ylim The \code{y} limits of the plot.
+#' @param xlim The \code{x} limits of the plot.
+#' @param \dots Other options.
+#' @return No value is returned.
+#' @author Luis Meira-Machado and Marta Sestelo
+#' @examples
+#' 
+#' fit1 <- survCOND(survCS(time1, event1, Stime, event) ~ 1, x = 365,
+#'    data = colonCS, method = "LDM", conf = TRUE)
+#' 
+#' plot(fit1, xlab = "Time (days)", ylab = "S(y|365)", ylim = c(0.5, 1))
+#' 
+#' fit4 <- survCOND(survCS(time1, event1, Stime, event) ~ rx,
+#'    x = 365, data = colonCS, method = "LDM")
+#' 
+#' plot(fit4, xlab = "Time (days)", ylab = "S(y|365)", ylim = c(0.5, 1))
+#' 
+#' 
+#' @export plot.survCS
 plot.survCS <- function(x = object, y = NULL, conf = NULL, type = NULL,
                         conftype = NULL, col = 1:6, confcol = 1:6, lty = 1, conflty = 2,
                         xlab = "Time", ylab = "Survival", ylim = NULL, xlim = NULL, ...) {

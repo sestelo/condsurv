@@ -2,8 +2,8 @@ Package: condSURV
 Type: Package
 Title: Estimation of the Conditional Survival Function for Ordered Multivariate
     Failure Time Data
-Version: 2.0.1
-Date: 2016-12-20
+Version: 2.0.3
+Date: 2022-11-14
 Author: Luis Meira-Machado and Marta Sestelo
 Maintainer: Marta Sestelo <sestelo@uvigo.es>
 Description: Method to implement some newly developed methods for the
@@ -20,4 +20,5 @@ Imports:
     parallel,
     doRNG,
     foreach
-
+RoxygenNote: 7.1.2
+Encoding: UTF-8
