@@ -101,9 +101,7 @@ NULL
 
 
 
-#' condSURV:
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_title(\"#1\")}",
-#' "condSURV")\Sexpr{tools:::Rd_package_title("condSURV")} %A package for
+#' condSURV:A package for
 #' nonparametric estimation of the survival functions for ordered multivariate
 #' failure time data.
 #'
